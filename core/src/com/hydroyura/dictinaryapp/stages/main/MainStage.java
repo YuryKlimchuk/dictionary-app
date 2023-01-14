@@ -1,6 +1,7 @@
-package com.hydroyura.dictinaryapp.stages;
+package com.hydroyura.dictinaryapp.stages.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -27,6 +28,8 @@ public class MainStage extends Stage {
     private Group headerGroup;
 
     ClickListener clickListener;
+
+    private DefaultStateMachine<Group, HeaderGroupStates> headerGroupFsm;
 
     private int MAIN_BUTTON_SIZE_X = Gdx.graphics.getWidth()/7;
     private int MAIN_BUTTON_SIZE_Y = Gdx.graphics.getWidth()/7;
@@ -74,6 +77,9 @@ public class MainStage extends Stage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(this.getClass().toString(), "Btn with name: " + event.getListenerActor().getName() + " was pressed");
+                if(event.getListenerActor().getName().equals("MAIN_BTN_DICTIONARY")) headerGroupFsm.changeState(HeaderGroupStates.DICTIONARY);
+                if(event.getListenerActor().getName().equals("MAIN_BTN_MY_WORDS")) headerGroupFsm.changeState(HeaderGroupStates.MY_WORDS);
+                if(event.getListenerActor().getName().equals("MAIN_BTN_TRAIN")) headerGroupFsm.changeState(HeaderGroupStates.TRAIN);
             }
         };
 
@@ -110,17 +116,27 @@ public class MainStage extends Stage {
                 .get("title", LabelStyle.class);
 
         Label background = new Label("", style);
+        background.setName("HEADER_GROUP_BACKGROUND");
         background.setColor(Color.DARK_GRAY);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
         background.setPosition(0, 0);
         headerGroup.addActor(background);
 
         Label title = new Label("TITLE_1", style);
+        title.setName("HEADER_GROUP_TITLE");
         title.setColor(background.getColor());
         title.setPosition(Gdx.graphics.getWidth()/2 - title.getWidth()/2,20f);
         headerGroup.addActor(title);
 
         addActor(headerGroup);
+
+        headerGroupFsm = new DefaultStateMachine<>(headerGroup, HeaderGroupStates.DICTIONARY);
+
     }
 
+    @Override
+    public void draw() {
+        super.draw();
+        headerGroupFsm.update();
+    }
 }
