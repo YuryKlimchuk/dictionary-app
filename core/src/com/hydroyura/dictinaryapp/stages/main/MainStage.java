@@ -77,6 +77,9 @@ public class MainStage extends Stage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(this.getClass().toString(), "Btn with name: " + event.getListenerActor().getName() + " was pressed");
+                if(event.getListenerActor().getName().equals("MAIN_BTN_DICTIONARY")) headerGroupFsm.changeState(HeaderGroupStates.DICTIONARY);
+                if(event.getListenerActor().getName().equals("MAIN_BTN_MY_WORDS")) headerGroupFsm.changeState(HeaderGroupStates.MY_WORDS);
+                if(event.getListenerActor().getName().equals("MAIN_BTN_TRAIN")) headerGroupFsm.changeState(HeaderGroupStates.TRAIN);
             }
         };
 
@@ -127,10 +130,7 @@ public class MainStage extends Stage {
 
         addActor(headerGroup);
 
-        headerGroupFsm = new DefaultStateMachine<>(headerGroup);
-        headerGroupFsm.changeState(HeaderGroupStates.DICTIONARY);
-        headerGroupFsm.changeState(HeaderGroupStates.TRAIN);
-        headerGroupFsm.changeState(HeaderGroupStates.MY_WORDS);
+        headerGroupFsm = new DefaultStateMachine<>(headerGroup, HeaderGroupStates.DICTIONARY);
 
     }
 
