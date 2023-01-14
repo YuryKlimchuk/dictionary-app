@@ -30,6 +30,7 @@ public class MainStage extends Stage {
     ClickListener clickListener;
 
     private DefaultStateMachine<Group, HeaderGroupStates> headerGroupFsm;
+    private DefaultStateMachine<Group, FooterGroupStates> footerGroupFsm;
 
     private int MAIN_BUTTON_SIZE_X = Gdx.graphics.getWidth()/7;
     private int MAIN_BUTTON_SIZE_Y = Gdx.graphics.getWidth()/7;
@@ -53,6 +54,7 @@ public class MainStage extends Stage {
                 .getResource("skin/skin-composer-ui.json", Skin.class)
                 .get("title", LabelStyle.class);
         Label background = new Label("", labelStyle);
+        background.setName("FOOTER_GROUP_BACKGROUND");
         background.setColor(Color.PURPLE);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
         background.setPosition(0f, 0f);
@@ -77,9 +79,18 @@ public class MainStage extends Stage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(this.getClass().toString(), "Btn with name: " + event.getListenerActor().getName() + " was pressed");
-                if(event.getListenerActor().getName().equals("MAIN_BTN_DICTIONARY")) headerGroupFsm.changeState(HeaderGroupStates.DICTIONARY);
-                if(event.getListenerActor().getName().equals("MAIN_BTN_MY_WORDS")) headerGroupFsm.changeState(HeaderGroupStates.MY_WORDS);
-                if(event.getListenerActor().getName().equals("MAIN_BTN_TRAIN")) headerGroupFsm.changeState(HeaderGroupStates.TRAIN);
+                if(event.getListenerActor().getName().equals("MAIN_BTN_DICTIONARY")) {
+                    headerGroupFsm.changeState(HeaderGroupStates.DICTIONARY);
+                    footerGroupFsm.changeState(FooterGroupStates.DICTIONARY);
+                }
+                if(event.getListenerActor().getName().equals("MAIN_BTN_MY_WORDS")) {
+                    headerGroupFsm.changeState(HeaderGroupStates.MY_WORDS);
+                    footerGroupFsm.changeState(FooterGroupStates.MY_WORDS);
+                }
+                if(event.getListenerActor().getName().equals("MAIN_BTN_TRAIN")) {
+                    headerGroupFsm.changeState(HeaderGroupStates.TRAIN);
+                    footerGroupFsm.changeState(FooterGroupStates.TRAIN);
+                }
             }
         };
 
@@ -88,6 +99,8 @@ public class MainStage extends Stage {
             footerGroup.addActor(createMainButton(entry.getValue(), entry.getKey(), style, position));
             POSITION_X += (MAIN_BUTTON_SIZE_X * 2);
         };
+
+        footerGroupFsm = new DefaultStateMachine<>(footerGroup, FooterGroupStates.DICTIONARY);
 
         addActor(footerGroup);
     }
