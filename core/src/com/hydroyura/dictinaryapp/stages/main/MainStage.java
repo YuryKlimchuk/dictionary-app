@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hydroyura.dictinaryapp.AppStarter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MainStage extends Stage {
 
@@ -53,38 +53,14 @@ public class MainStage extends Stage {
         footerGroup.setName("FOOTER_GROUP");
         addActor(footerGroup);
 
-        Background background = new Background(Color.CORAL);
-        footerGroup.addActor(background);
-
-        /*
-        LabelStyle labelStyle = app
-                .getResource("skin/skin-composer-ui.json", Skin.class)
-                .get("title", LabelStyle.class);
-        Label background = new Label("", labelStyle);
+        Background background = new Background(Color.WHITE);
         background.setName("FOOTER_GROUP_BACKGROUND");
-        background.setColor(Color.WHITE);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
-        background.setPosition(0f, 0f);
-        background.setZIndex(1);
         footerGroup.addActor(background);
 
-        Skin customSkin = app.getResource("skin/custom-skin.json", Skin.class);
-
-        // key: btn id; value: btn title
-        Map<String, String> BTN_DATA = new HashMap<>() {{
-            put("MAIN_BTN_DICTIONARY", "Dictionary");
-            put("MAIN_BTN_MY_WORDS", "My words");
-            put("MAIN_BTN_TRAIN", "Train");
-        }};
-
-        Map<String, String> BTN_DATA_STYLES = new HashMap<>() {{
-            put("MAIN_BTN_DICTIONARY", "btn-dictionary");
-            put("MAIN_BTN_MY_WORDS", "btn-my-words");
-            put("MAIN_BTN_TRAIN", "btn-train");
-        }};
-
-        int POSITION_X = MAIN_BUTTON_SIZE_X;
-        int POSITION_Y = MAIN_BUTTON_SIZE_X;
+        Map<String, Collection<String>> FOOTER_BTN_SETTINGS = new HashMap<>();
+        FOOTER_BTN_SETTINGS.put("MAIN_BTN_DICTIONARY", Arrays.asList("Dictionary", "btn-dictionary", "btn-dictionary-active"));
+        FOOTER_BTN_SETTINGS.put("MAIN_BTN_MY_WORDS", Arrays.asList("My words", "btn-my-words", "btn-my-words-active"));
+        FOOTER_BTN_SETTINGS.put("MAIN_BTN_TRAIN", Arrays.asList("Train", "btn-train", "btn-train-active"));
 
         clickListener = new ClickListener() {
             @Override
@@ -105,18 +81,19 @@ public class MainStage extends Stage {
             }
         };
 
-        for(Map.Entry<String, String> entry: BTN_DATA.entrySet()) {
-            Vector2 position = new Vector2(POSITION_X, POSITION_Y/2);
-            footerGroup.addActor(createMainButton(entry.getValue(), entry.getKey(), customSkin.get(BTN_DATA_STYLES.get(entry.getKey()), ImageButtonStyle.class), position));
+        int POSITION_X = MAIN_BUTTON_SIZE_X;
+        int POSITION_Y = MAIN_BUTTON_SIZE_X/2;
+
+        for(Map.Entry<String, Collection<String>> entry: FOOTER_BTN_SETTINGS.entrySet()) {
+            ArrayList<String> list = new ArrayList<>(entry.getValue());
+            Vector2 position = new Vector2(POSITION_X, POSITION_Y);
+            footerGroup.addActor(createMainButton(list.get(0), entry.getKey(), skin.get(list.get(1), ImageButtonStyle.class), position));
             POSITION_X += (MAIN_BUTTON_SIZE_X * 2);
         };
 
-        footerGroupFsm = new DefaultStateMachine<>(footerGroup, FooterGroupStates.DICTIONARY);
+        footerGroupFsm = new DefaultStateMachine<>(footerGroup);
+        footerGroupFsm.changeState(FooterGroupStates.DICTIONARY);
 
-        addActor(footerGroup);
-
-
-         */
     }
 
     private ImageButton createMainButton(String title, String id, ImageButtonStyle style, Vector2 position) {
@@ -126,7 +103,7 @@ public class MainStage extends Stage {
         btn.setPosition(position.x, position.y);
         btn.setName(id);
         btn.addListener(clickListener);
-        btn.setZIndex(1500);
+        //btn.setZIndex(1500);
 
         return btn;
     };
@@ -165,6 +142,6 @@ public class MainStage extends Stage {
     public void draw() {
         super.draw();
         //headerGroupFsm.update();
-        //footerGroupFsm.update();
+        footerGroupFsm.update();
     }
 }
