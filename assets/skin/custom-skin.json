@@ -1,0 +1,57 @@
+{
+  "com.badlogic.gdx.graphics.Color": {
+    "my-words-color" : {
+      "r" : 0.560784314,
+      "g" : 0.788235294,
+      "b" : 0.364705882,
+      "a" : 1
+    },
+
+    "dictionary-color" : {
+      "r" : 1,
+      "g" : 0.694117647,
+      "b" : 0.215686275,
+      "a" : 1
+    },
+
+    "train-color" : {
+      "r" : 0.560784314,
+      "g" : 0.788235294,
+      "b" : 0.364705882,
+      "a" : 1
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+      "btn-dictionary": {
+        "up": "btn-dictionary",
+        "down": "btn-dictionary-pressed"
+      },
+      "btn-dictionary-active": {
+        "up": "btn-dictionary-active"
+      },
+
+      "btn-train": {
+        "up": "btn-train",
+        "down": "btn-train-pressed"
+      },
+      "btn-train-active": {
+        "up": "btn-train-active"
+      },
+
+      "btn-my-words": {
+        "up": "btn-my-words",
+        "down": "btn-my-words-pressed"
+      },
+      "btn-my-words-active": {
+        "up": "btn-my-words-active"
+      }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+      "footer-background" : {
+
+      }
+
+  }
+}

@@ -39,16 +39,10 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
-    jar {
-        manifest {
-            attributes(
-                    'Main-Class': 'com.hydroyura.dictinaryapp.DesktopLauncher'
-            )
-        }
-    }
 
     dependencies {
         implementation project(":core")
+        implementation 'org.xerial:sqlite-jdbc:3.40.0.0'
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"

@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hydroyura.dictinaryapp.AppStarter;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +33,12 @@ public class MainStage extends Stage {
     private int MAIN_BUTTON_SIZE_X = Gdx.graphics.getWidth()/7;
     private int MAIN_BUTTON_SIZE_Y = Gdx.graphics.getWidth()/7;
 
+    private Skin skin;
+
     public MainStage() {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         app = (AppStarter) Gdx.app.getApplicationListener();
+        skin = app.getResource("skin/custom-skin.json", Skin.class);
 
         createFooterGroup();
         createHeaderGroup();
@@ -48,28 +49,38 @@ public class MainStage extends Stage {
     private void  createFooterGroup() {
         footerGroup = new Group();
         footerGroup.setPosition(0f, 0f);
+        footerGroup.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
         footerGroup.setName("FOOTER_GROUP");
+        addActor(footerGroup);
 
+        Background background = new Background(Color.CORAL);
+        footerGroup.addActor(background);
+
+        /*
         LabelStyle labelStyle = app
                 .getResource("skin/skin-composer-ui.json", Skin.class)
                 .get("title", LabelStyle.class);
         Label background = new Label("", labelStyle);
         background.setName("FOOTER_GROUP_BACKGROUND");
-        background.setColor(Color.PURPLE);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
+        background.setColor(Color.WHITE);
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
         background.setPosition(0f, 0f);
         background.setZIndex(1);
         footerGroup.addActor(background);
 
-        ImageTextButtonStyle style = app
-                .getResource("skin/skin-composer-ui.json", Skin.class)
-                .get("default", ImageTextButtonStyle.class);
+        Skin customSkin = app.getResource("skin/custom-skin.json", Skin.class);
 
         // key: btn id; value: btn title
         Map<String, String> BTN_DATA = new HashMap<>() {{
             put("MAIN_BTN_DICTIONARY", "Dictionary");
             put("MAIN_BTN_MY_WORDS", "My words");
             put("MAIN_BTN_TRAIN", "Train");
+        }};
+
+        Map<String, String> BTN_DATA_STYLES = new HashMap<>() {{
+            put("MAIN_BTN_DICTIONARY", "btn-dictionary");
+            put("MAIN_BTN_MY_WORDS", "btn-my-words");
+            put("MAIN_BTN_TRAIN", "btn-train");
         }};
 
         int POSITION_X = MAIN_BUTTON_SIZE_X;
@@ -95,18 +106,21 @@ public class MainStage extends Stage {
         };
 
         for(Map.Entry<String, String> entry: BTN_DATA.entrySet()) {
-            Vector2 position = new Vector2(POSITION_X, POSITION_Y);
-            footerGroup.addActor(createMainButton(entry.getValue(), entry.getKey(), style, position));
+            Vector2 position = new Vector2(POSITION_X, POSITION_Y/2);
+            footerGroup.addActor(createMainButton(entry.getValue(), entry.getKey(), customSkin.get(BTN_DATA_STYLES.get(entry.getKey()), ImageButtonStyle.class), position));
             POSITION_X += (MAIN_BUTTON_SIZE_X * 2);
         };
 
         footerGroupFsm = new DefaultStateMachine<>(footerGroup, FooterGroupStates.DICTIONARY);
 
         addActor(footerGroup);
+
+
+         */
     }
 
-    private ImageTextButton createMainButton(String title, String id, ImageTextButtonStyle style, Vector2 position) {
-        ImageTextButton btn = new ImageTextButton(title, style);
+    private ImageButton createMainButton(String title, String id, ImageButtonStyle style, Vector2 position) {
+        ImageButton btn = new ImageButton(style);
 
         btn.setSize(MAIN_BUTTON_SIZE_X, MAIN_BUTTON_SIZE_Y);
         btn.setPosition(position.x, position.y);
@@ -150,6 +164,7 @@ public class MainStage extends Stage {
     @Override
     public void draw() {
         super.draw();
-        headerGroupFsm.update();
+        //headerGroupFsm.update();
+        //footerGroupFsm.update();
     }
 }

@@ -1,14 +1,10 @@
 package com.hydroyura.dictinaryapp;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.hydroyura.dictinaryapp.data.repository.IRepository;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
 
@@ -19,6 +15,16 @@ public class AppStarter extends Game {
 	private Screen mainScreen = new MainScreen();
 	private Screen splashScreen = new SplashScreen();
 
+	private IRepository repository;
+
+	private AppStarter() {
+		throw new RuntimeException("Forbidden to use");
+	}
+
+	public AppStarter(IRepository repository) {
+		this.repository = repository;
+	}
+
 	@Override
 	public void create() {
 		loadResources();
@@ -28,8 +34,13 @@ public class AppStarter extends Game {
 	@Override
 	public void dispose() {}
 
+	public IRepository getRepository() {
+		return repository;
+	}
+
 	private void loadResources() {
 		assetManager.load("skin/skin-composer-ui.json", Skin.class);
+		assetManager.load("skin/custom-skin.json", Skin.class);
 	}
 
 	public float getLoadingProgress() {
