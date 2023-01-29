@@ -7,15 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +28,8 @@ public class MainStage extends Stage {
     private Group footerGroup;
     private Group headerGroup;
 
+    private Group bodyGroup;
+
     ClickListener clickListener;
 
     private DefaultStateMachine<Group, HeaderGroupStates> headerGroupFsm;
@@ -37,6 +37,8 @@ public class MainStage extends Stage {
 
     private int MAIN_BUTTON_SIZE_X = Gdx.graphics.getWidth()/7;
     private int MAIN_BUTTON_SIZE_Y = Gdx.graphics.getWidth()/7;
+
+    private ObjectMapper mapper = new ObjectMapper();
 
     private Skin skin;
 
@@ -50,8 +52,10 @@ public class MainStage extends Stage {
         try {
             createHeaderGroup();
         } catch (Exception ex) {
-            
+
         }
+
+        createBodyGroup();
 
         Gdx.app.log(this.getClass().toString(), "created");
     }
@@ -128,11 +132,8 @@ public class MainStage extends Stage {
                 .getResource("skin/skin-composer-ui.json", Skin.class)
                 .get("title", LabelStyle.class);
 
-        Label background = new Label("", style);
+        Background background = new Background(Color.DARK_GRAY);
         background.setName("HEADER_GROUP_BACKGROUND");
-        background.setColor(Color.DARK_GRAY);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
-        background.setPosition(0, 0);
         headerGroup.addActor(background);
 
         Label title = new Label("TITLE_1", style);
@@ -154,6 +155,12 @@ public class MainStage extends Stage {
                 Gdx.graphics.getWidth()/2 - searchInput.getWidth()/2,
                 Gdx.graphics.getHeight()/10
         );
+
+
+        searchInput.setOnscreenKeyboard(new TextField.DefaultOnscreenKeyboard());
+        searchInput.setTextFieldListener(new SearchTextFieldListener());
+
+
         headerGroup.addActor(searchInput);
 
 
@@ -176,14 +183,58 @@ public class MainStage extends Stage {
         body.put("tls", Arrays.asList("ru"));
         body.put("sl", "en");
 
-        Json json = new Json();
-        json.setTypeName(null);
-        //json.setUsePrototypes(false);
-
-        ObjectMapper mapper = new ObjectMapper();
         mapper.writeValueAsString(body);
+        //httpClient.post(url, headers, mapper.writeValueAsString(body));
 
-        httpClient.post(url, headers, mapper.writeValueAsString(body));
+        String url2 = HttpClient.URL_AUTOCOMPLETE;
+        Map<String, String> headers2 = Map.of(
+                "X-RapidAPI-Key", "a29d3e29demshc51d3e75c10c484p1eebcejsn8aaa8c3f733f",
+                "X-RapidAPI-Host", "typewise-ai.p.rapidapi.com",
+                "content-type", "application/json"
+        );
+
+        Map<String, Object> body2 = new HashMap<>();
+        body2.put("text", "foo");
+        body2.put("correctTypoInPartialWord", false);
+        body2.put("language", "en");
+
+        mapper.writeValueAsString(body2);
+        //httpClient.post(url2, headers2, mapper.writeValueAsString(body2));
+
+
+    }
+
+    private void createBodyGroup() {
+        bodyGroup = new Group();
+        bodyGroup.setName("BODY_GROUP");
+        bodyGroup.setPosition(0, Gdx.graphics.getHeight()/8);
+        bodyGroup.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 17 / 24);
+        addActor(bodyGroup);
+
+        Background background = new Background(Color.RED);
+        background.setName("BODY_GROUP_BACKGROUND");
+        bodyGroup.addActor(background);
+
+        Skin skin = app.getResource("skin/custom-skin.json", Skin.class);
+
+        VerticalGroup searchResult = new VerticalGroup();
+        searchResult.setName("SEARCH_RESULT");
+        searchResult.setPosition(130, 250);
+
+        LabelStyle style = app
+                .getResource("skin/skin-composer-ui.json", Skin.class)
+                .get("title", LabelStyle.class);
+
+        searchResult.addActor(new Label("La la la", style));
+        searchResult.addActor(new Label("La la la3", style));
+        searchResult.addActor(new Label("La la la345", style));
+
+        app.setSearchResult(searchResult);
+
+        //searchResult.align(Align.left);
+        //searchResult.left();
+
+        bodyGroup.addActor(searchResult);
     }
 
     @Override

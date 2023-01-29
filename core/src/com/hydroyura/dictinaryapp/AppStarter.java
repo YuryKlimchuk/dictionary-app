@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.hydroyura.dictinaryapp.data.repository.IRepository;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
@@ -17,6 +18,8 @@ public class AppStarter extends Game {
 	private Screen splashScreen = new SplashScreen();
 
 	private HttpClient httpClient = new HttpClient();
+
+	private VerticalGroup searchResult;
 
 	private IRepository repository;
 
@@ -64,5 +67,13 @@ public class AppStarter extends Game {
 
 	public HttpClient getHttpClient() {
 		return httpClient;
+	}
+
+	public VerticalGroup getSearchResult() {
+		return searchResult;
+	}
+
+	public void setSearchResult(VerticalGroup searchResult) {
+		this.searchResult = searchResult;
 	}
 }

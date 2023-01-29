@@ -23,7 +23,6 @@ public class Background extends Actor {
         if(batch.isDrawing()) batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-            shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
             shapeRenderer.setColor(getColor());
             shapeRenderer.rect(
                     getParent().getX(), getParent().getY(),

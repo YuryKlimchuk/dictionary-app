@@ -14,7 +14,7 @@ enum HeaderGroupStates implements State<Group> {
         public void enter(Group entity) {
             Gdx.app.log(this.getClass().toString(), "HeaderGroup enter in DICTIONARY state");
 
-            updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.BLUE);
+            //updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.BLUE);
             updateTitle(entity.findActor("HEADER_GROUP_TITLE"), "Dictionary", Color.BLUE);
         }
     },
@@ -24,7 +24,7 @@ enum HeaderGroupStates implements State<Group> {
         public void enter(Group entity) {
             Gdx.app.log(this.getClass().toString(), "HeaderGroup enter in MY_WORDS state");
 
-            updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.DARK_GRAY);
+            //updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.DARK_GRAY);
             updateTitle(entity.findActor("HEADER_GROUP_TITLE"), "My words", Color.DARK_GRAY);
         }
     },
@@ -34,7 +34,7 @@ enum HeaderGroupStates implements State<Group> {
         public void enter(Group entity) {
             Gdx.app.log(this.getClass().toString(), "HeaderGroup enter in TRAIN state");
 
-            updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.PURPLE);
+            //updateBackground(entity.findActor("HEADER_GROUP_BACKGROUND"), Color.PURPLE);
             updateTitle(entity.findActor("HEADER_GROUP_TITLE"), "Train", Color.PURPLE);
         }
     };
