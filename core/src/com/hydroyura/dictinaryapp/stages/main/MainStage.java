@@ -12,10 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 
 import java.util.*;
 
@@ -41,7 +46,12 @@ public class MainStage extends Stage {
         skin = app.getResource("skin/custom-skin.json", Skin.class);
 
         createFooterGroup();
-        createHeaderGroup();
+
+        try {
+            createHeaderGroup();
+        } catch (Exception ex) {
+            
+        }
 
         Gdx.app.log(this.getClass().toString(), "created");
     }
@@ -103,12 +113,11 @@ public class MainStage extends Stage {
         btn.setPosition(position.x, position.y);
         btn.setName(id);
         btn.addListener(clickListener);
-        //btn.setZIndex(1500);
 
         return btn;
     };
 
-    private void createHeaderGroup() {
+    private void createHeaderGroup() throws JsonProcessingException {
         headerGroup = new Group();
         headerGroup.setPosition(0, Gdx.graphics.getHeight()*5/6);
         headerGroup.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
@@ -132,10 +141,49 @@ public class MainStage extends Stage {
         title.setPosition(Gdx.graphics.getWidth()/2 - title.getWidth()/2,20f);
         headerGroup.addActor(title);
 
-        addActor(headerGroup);
+        TextFieldStyle searchInputStyle = app
+                .getResource("skin/custom-skin.json", Skin.class)
+                .get("search-input", TextFieldStyle.class);
 
+        TextField searchInput = new TextField("", searchInputStyle);
+        searchInput.getStyle().font.setColor(Color.BLUE);
+        searchInput.getStyle().fontColor = Color.BROWN;
+        searchInput.setName("HEADER_GROUP_SEARCH_INPUT");
+        searchInput.setSize(Gdx.graphics.getWidth() * 0.8f, Gdx.graphics.getHeight()/20);
+        searchInput.setPosition(
+                Gdx.graphics.getWidth()/2 - searchInput.getWidth()/2,
+                Gdx.graphics.getHeight()/10
+        );
+        headerGroup.addActor(searchInput);
+
+
+        addActor(headerGroup);
         headerGroupFsm = new DefaultStateMachine<>(headerGroup, HeaderGroupStates.DICTIONARY);
 
+
+        // test http request
+        HttpClient httpClient = app.getHttpClient();
+
+        String url = HttpClient.URL_TRANSLATE;
+        Map<String, String> headers = Map.of(
+                "X-RapidAPI-Key", "244b5dd242msh2d660d8777daa5cp110e59jsn2bcfbca1afed",
+                "X-RapidAPI-Host", "ai-translate.p.rapidapi.com",
+                "content-type", "application/json"
+        );
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("texts", Arrays.asList("Hello world"));
+        body.put("tls", Arrays.asList("ru"));
+        body.put("sl", "en");
+
+        Json json = new Json();
+        json.setTypeName(null);
+        //json.setUsePrototypes(false);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValueAsString(body);
+
+        httpClient.post(url, headers, mapper.writeValueAsString(body));
     }
 
     @Override

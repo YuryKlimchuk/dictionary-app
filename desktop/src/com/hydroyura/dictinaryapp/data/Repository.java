@@ -15,6 +15,7 @@ public class Repository implements IRepository {
     }
 
     void connect() {
+        /*
         try {
             // db parameters
             String url = "jdbc:sqlite:assets/data/JTP.db";
@@ -34,6 +35,8 @@ public class Repository implements IRepository {
                 System.out.println(ex.getMessage());
             }
         }
+
+         */
     }
 
     void initSchema() {

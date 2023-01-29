@@ -1,4 +1,11 @@
 {
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "font-22-normal": {
+      "file": "font-inter-22-normal.fnt"
+    }
+  },
+
+
   "com.badlogic.gdx.graphics.Color": {
     "my-words-color" : {
       "r" : 0.560784314,
@@ -48,9 +55,11 @@
       }
   },
 
-  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-      "footer-background" : {
-
+  "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+      "search-input": {
+        "font": "font-22-normal",
+        "background": "text-input",
+        "focusedBackground": "text-input-focus"
       }
 
   }

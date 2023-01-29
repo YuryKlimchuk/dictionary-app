@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.hydroyura.dictinaryapp.data.repository.IRepository;
+import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
 
@@ -14,6 +15,8 @@ public class AppStarter extends Game {
 	private AssetManager assetManager = new AssetManager();
 	private Screen mainScreen = new MainScreen();
 	private Screen splashScreen = new SplashScreen();
+
+	private HttpClient httpClient = new HttpClient();
 
 	private IRepository repository;
 
@@ -57,5 +60,9 @@ public class AppStarter extends Game {
 
 	public void setMainScreen() {
 		setScreen(mainScreen);
+	}
+
+	public HttpClient getHttpClient() {
+		return httpClient;
 	}
 }
