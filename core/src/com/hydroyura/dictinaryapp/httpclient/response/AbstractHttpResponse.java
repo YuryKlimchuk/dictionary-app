@@ -19,7 +19,7 @@ public abstract class AbstractHttpResponse<DTO> implements HttpResponseListener 
 
     @Override
     public void failed(Throwable t) {
-        Gdx.app.log(getClass().toString(), "failed");
+        Gdx.app.log(getClass().toString(), "failed, t = " + t.toString());
     }
 
     @Override

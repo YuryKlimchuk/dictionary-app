@@ -13,7 +13,7 @@ import com.hydroyura.dictinaryapp.httpclient.response.impl.AutoCompleteHttpRespo
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchTextFieldListener implements TextFieldListener {
+public class FieldWordInputListener implements TextFieldListener {
 
     private HttpClient httpClient;
 
@@ -21,7 +21,7 @@ public class SearchTextFieldListener implements TextFieldListener {
 
     private Net.HttpResponseListener listener;
 
-    public SearchTextFieldListener() {
+    public FieldWordInputListener() {
         httpClient = ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient();
         mapper = new ObjectMapper();
         listener = new AutoCompleteHttpResponse();

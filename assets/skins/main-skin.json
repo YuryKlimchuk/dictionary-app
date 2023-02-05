@@ -1,0 +1,86 @@
+{
+  "com.badlogic.gdx.graphics.Color": {
+    "my-words-color" : {
+      "r": 0.560784314,
+      "g": 0.788235294,
+      "b": 0.364705882,
+      "a": 1
+    },
+
+    "dictionary-color" : {
+      "r": 1,
+      "g": 0.694117647,
+      "b": 0.215686275,
+      "a": 1
+    },
+
+    "train-color" : {
+      "r": 0.560784314,
+      "g": 0.788235294,
+      "b": 0.364705882,
+      "a": 1
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+    "header-title": {
+      "font": "header-title-font",
+      "fontColor": "train-color"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "autocomplete-result-label": {
+
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
+      "btn-dictionary": {
+        "up": "btn-dictionary",
+        "down": "btn-dictionary-pressed",
+        "font": "main-btns-font"
+      },
+      "btn-dictionary-active": {
+        "up": "btn-dictionary-active",
+        "font": "main-btns-font"
+      },
+
+      "btn-train": {
+        "up": "btn-train",
+        "down": "btn-train-pressed",
+        "font": "main-btns-font"
+      },
+      "btn-train-active": {
+        "up": "btn-train-active",
+        "font": "main-btns-font"
+      },
+
+      "btn-my-words": {
+        "up": "btn-my-words",
+        "down": "btn-my-words-pressed",
+        "font": "main-btns-font"
+      },
+      "btn-my-words-active": {
+        "up": "btn-my-words-active",
+        "font": "main-btns-font"
+      }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+    "field-word-input": {
+      "font": "word-input-font",
+      "fontColor": "train-color",
+      "background": "field-word-input",
+      "focusedBackground": "field-word-input-active"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+    "clear-text": {
+      "up": "btn-clear-word",
+      "down": "btn-clear-word-pressed"
+    }
+  }
+
+}

@@ -8,7 +8,11 @@ import com.hydroyura.dictinaryapp.stages.main.MainStage;
 
 public class MainScreen implements Screen {
 
-    Stage stage;
+    public Stage getStage() {
+        return stage;
+    }
+
+    private Stage stage;
 
     @Override
     public void show() {

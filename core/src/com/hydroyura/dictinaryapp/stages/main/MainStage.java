@@ -4,26 +4,210 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
+import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 
 import java.util.*;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 public class MainStage extends Stage {
 
+    private Map<String, List<String>> FOOTER_MAIN_BTNS_SETTINGS = new HashMap<>() {
+        {
+            put("MAIN_BTN_DICTIONARY", Arrays.asList("Slovar", "btn-dictionary"));
+            put("MAIN_BTN_MY_WORDS", Arrays.asList("My words", "btn-my-words"));
+            put("MAIN_BTN_TRAIN", Arrays.asList("Train", "btn-train"));
+        }
+    };
+
+
+    private AppStarter app;
+
+    private Skin skin;
+
+    private ObjectMapper mapper = new ObjectMapper();
+
+    private Group footerMain, headerWordInput, body;
+
+    private ObjectMap<String, Group> groups = new ObjectMap<>();
+
+    private TextFieldListener fieldWordInputListener = new FieldWordInputListener();
+
+    private ClickListener btnClearTextListener = new ClickListener() {
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Group group = event.getListenerActor().getParent();
+            TextField textField = (TextField) group.findActor(FIELD_WORD_INPUT_ID);
+            textField.setText("");
+        }
+    };
+
+    public MainStage() {
+        Gdx.app.log(this.getClass().toString(), "MainStage()");
+        app = (AppStarter) Gdx.app.getApplicationListener();
+        skin = app.getResource("skins/main-skin.json", Skin.class);
+
+        groups.put(BODY_ID, bodyCreate());
+        groups.put(FOOTER_MAIN_ID, footerMainCreate());
+        groups.put(HEADER_WORD_INPUT_ID, headerWordInputCreate());
+    }
+
+    Group footerMainCreate() {
+        Group group = new Group();
+        group.setName(FOOTER_MAIN_ID);
+        group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
+        group.setPosition(0f, 0f);
+        group.addActor(new Background(Color.WHITE));
+        addActor(group);
+
+        int POSITION_X = Gdx.graphics.getWidth() / 7;
+        int POSITION_Y = POSITION_X / 2;
+        for(Map.Entry<String, List<String>> entry: FOOTER_MAIN_BTNS_SETTINGS.entrySet()) {
+            String key = entry.getKey();
+            List<String> value = entry.getValue();
+            ImageTextButton btn = new ImageTextButton(value.get(0), skin.get(value.get(1), ImageTextButtonStyle.class));
+            btn.setSize(Gdx.graphics.getWidth()/7, Gdx.graphics.getWidth()/7);
+            btn.setPosition(POSITION_X, POSITION_Y);
+            btn.getLabelCell().padTop(btn.getHeight());
+            group.addActor(btn);
+            POSITION_X += 2 * Gdx.graphics.getWidth() / 7;
+        };
+
+        return group;
+    };
+
+
+    Group headerWordInputCreate() {
+        Group group = new Group();
+        group.setName(HEADER_WORD_INPUT_ID);
+        group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 5);
+        group.setPosition(0f, Gdx.graphics.getHeight() * 4 / 5);
+        group.addActor(new Background(skin.getColor("dictionary-color")));
+        addActor(group);
+
+        Label title = new Label("Slovar", skin.get("header-title", LabelStyle.class));
+        title.setPosition(group.getWidth() / 2 - title.getWidth() / 2, group.getHeight() * 2 / 3);
+        group.addActor(title);
+
+        TextField fieldWordInput = new TextField("", skin.get("field-word-input", TextFieldStyle.class));
+        fieldWordInput.setName(FIELD_WORD_INPUT_ID);
+        fieldWordInput.setSize(Gdx.graphics.getWidth() * 0.80f, group.getHeight() / 3f);
+        fieldWordInput.setPosition(Gdx.graphics.getWidth() / 2f - fieldWordInput.getWidth() / 2f, group.getHeight() / 5f);
+        fieldWordInput.getStyle().background.setLeftWidth(80f);
+        fieldWordInput.setTextFieldListener(fieldWordInputListener);
+        group.addActor(fieldWordInput);
+
+        ImageButton btnClearText = new ImageButton(skin.get("clear-text", ImageButtonStyle.class));
+        btnClearText.setSize(fieldWordInput.getHeight() / 3f, fieldWordInput.getHeight() / 3f);
+        btnClearText.setPosition(fieldWordInput.getX() + fieldWordInput.getWidth() * 0.9f, (fieldWordInput.getY() + fieldWordInput.getHeight() / 2f) - btnClearText.getHeight() / 2f);
+        btnClearText.addListener(btnClearTextListener);
+        group.addActor(btnClearText);
+
+        return group;
+    }
+
+
+    Group bodyCreate() {
+        Group group = new Group();
+        group.setName(BODY_ID);
+        group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        group.setPosition(0f, 0);
+        group.addActor(new Background(Color.DARK_GRAY));
+        addActor(group);
+
+        Table table = new Table(skin);
+        table.setName(BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
+        table.setWidth(Gdx.graphics.getWidth() * 0.85f);
+        table.setHeight(Gdx.graphics.getHeight() / 2f);
+        table.setPosition(15f, 150f);
+        group.addActor(table);
+        table.align(Align.topLeft);
+
+
+
+
+
+        return group;
+    }
+
+
+    /**
+     * Find actor in group by present ids.
+     * @param groupId
+     * @param actorId
+     * @return Actor
+     * @param <T>
+     */
+    public <T extends Actor> T findActor(String groupId, String actorId) {
+        return groups.get(groupId).findActor(actorId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     private AppStarter app;
     private Group footerGroup;
     private Group headerGroup;
@@ -213,26 +397,36 @@ public class MainStage extends Stage {
 
         Background background = new Background(Color.RED);
         background.setName("BODY_GROUP_BACKGROUND");
-        bodyGroup.addActor(background);
+        //bodyGroup.addActor(background);
 
         Skin skin = app.getResource("skin/custom-skin.json", Skin.class);
 
         VerticalGroup searchResult = new VerticalGroup();
+        searchResult.columnAlign(Align.left);
+        searchResult.align(Align.left);
+        bodyGroup.addActor(searchResult);
+
         searchResult.setName("SEARCH_RESULT");
-        searchResult.setPosition(130, 250);
+        searchResult.setPosition(5, 300);
+        searchResult.setWidth(Gdx.graphics.getWidth() - 10);
+        searchResult.setHeight(200);
+
 
         LabelStyle style = app
                 .getResource("skin/skin-composer-ui.json", Skin.class)
                 .get("title", LabelStyle.class);
 
-        searchResult.addActor(new Label("La la la", style));
-        searchResult.addActor(new Label("La la la3", style));
-        searchResult.addActor(new Label("La la la345", style));
+        Label label = new Label("La la la", style);
+        label.setPosition(100, 100);
+        searchResult.addActor(label);
+
+        Label label1 = new Label("La la la2222222222222", style);
+        searchResult.addActor(label1);
+
+
+
 
         app.setSearchResult(searchResult);
-
-        //searchResult.align(Align.left);
-        //searchResult.left();
 
         bodyGroup.addActor(searchResult);
     }
@@ -241,6 +435,7 @@ public class MainStage extends Stage {
     public void draw() {
         super.draw();
         //headerGroupFsm.update();
-        footerGroupFsm.update();
+        //footerGroupFsm.update();
     }
+     */
 }
