@@ -31,7 +31,9 @@
 
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "autocomplete-result-label": {
-
+      "up": "autocomplete-result-label",
+      "down": "autocomplete-result-label-pressed",
+      "font": "word-input-font"
     }
   },
 

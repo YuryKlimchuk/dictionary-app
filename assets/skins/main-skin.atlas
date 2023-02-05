@@ -1,0 +1,111 @@
+
+main-skin.png
+size: 4096, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+autocomplete-result-label
+  rotate: false
+  xy: 2, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+autocomplete-result-label-pressed
+  rotate: false
+  xy: 872, 176
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+btn-clear-word
+  rotate: false
+  xy: 3422, 416
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+btn-clear-word-pressed
+  rotate: false
+  xy: 2726, 242
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+btn-dictionary
+  rotate: false
+  xy: 176, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-dictionary-active
+  rotate: false
+  xy: 2726, 320
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-dictionary-pressed
+  rotate: false
+  xy: 2900, 320
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words
+  rotate: false
+  xy: 3248, 320
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words-active
+  rotate: false
+  xy: 3074, 320
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words-pressed
+  rotate: false
+  xy: 698, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-train
+  rotate: false
+  xy: 524, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-train-active
+  rotate: false
+  xy: 2, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-train-pressed
+  rotate: false
+  xy: 350, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+field-word-input
+  rotate: false
+  xy: 2, 228
+  size: 1360, 264
+  orig: 1360, 264
+  offset: 0, 0
+  index: -1
+field-word-input-active
+  rotate: false
+  xy: 1364, 228
+  size: 1360, 264
+  orig: 1360, 264
+  offset: 0, 0
+  index: -1

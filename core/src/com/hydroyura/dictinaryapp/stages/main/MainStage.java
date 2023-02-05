@@ -2,6 +2,7 @@ package com.hydroyura.dictinaryapp.stages.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,12 +24,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
+import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
 
 import java.util.*;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 public class MainStage extends Stage {
+
+
+    //----------- FSM ------------------
+    private DefaultStateMachine<Group, BodyFSMStates> fsmBody;
+    private ObjectMap<String, DefaultStateMachine<Group, State<Group>>> fsms = new ObjectMap<>();
+    //----------------------------------
+
 
     private Map<String, List<String>> FOOTER_MAIN_BTNS_SETTINGS = new HashMap<>() {
         {
@@ -57,6 +67,9 @@ public class MainStage extends Stage {
             Group group = event.getListenerActor().getParent();
             TextField textField = (TextField) group.findActor(FIELD_WORD_INPUT_ID);
             textField.setText("");
+
+            ((Table) groups.get(BODY_ID).findActor(BODY_WORDS_AUTOCOMPLETE_RESULT_ID)).clearChildren();
+
         }
     };
 
@@ -121,6 +134,8 @@ public class MainStage extends Stage {
         btnClearText.addListener(btnClearTextListener);
         group.addActor(btnClearText);
 
+        fsms.put(HEADER_WORD_INPUT_ID, new DefaultStateMachine<>(group, HeaderWordInputFSMStates.WORD_INPUT));
+
         return group;
     }
 
@@ -130,7 +145,7 @@ public class MainStage extends Stage {
         group.setName(BODY_ID);
         group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         group.setPosition(0f, 0);
-        group.addActor(new Background(Color.DARK_GRAY));
+        group.addActor(new Background(Color.SCARLET));
         addActor(group);
 
         Table table = new Table(skin);
@@ -143,7 +158,7 @@ public class MainStage extends Stage {
 
 
 
-
+        fsms.put(BODY_ID, new DefaultStateMachine<>(group, BodyFSMStates.WORD_INPUT));
 
         return group;
     }
@@ -157,7 +172,23 @@ public class MainStage extends Stage {
      * @param <T>
      */
     public <T extends Actor> T findActor(String groupId, String actorId) {
-        return groups.get(groupId).findActor(actorId);
+        try {
+            return groups.get(groupId).findActor(actorId);
+        } catch (ClassCastException ex) {
+            Gdx.app.log(this.getClass().toString(), "Cannot case to class");
+        }
+        return null;
+    }
+
+    public DefaultStateMachine<Group, State<Group>> getFSM(String id) {
+        return fsms.get(id);
+    }
+
+
+    @Override
+    public void draw() {
+        super.draw();
+        StreamSupport.stream(fsms.spliterator(), false).forEach(item -> item.value.update());
     }
 
 

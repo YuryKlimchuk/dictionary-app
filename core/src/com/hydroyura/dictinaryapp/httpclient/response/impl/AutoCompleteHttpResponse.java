@@ -14,6 +14,10 @@ import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.AutoCompleteConverter;
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOAutoCompleteResponse;
+import com.hydroyura.dictinaryapp.stages.main.MainStage;
+import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
+
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
 public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoCompleteResponse> {
@@ -46,6 +50,10 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
                     super.clicked(event, x, y);
                     TextButton button = (TextButton) event.getListenerActor();
                     Gdx.app.log(this.getClass().toString(), "clicked(), word = " + button.getText());
+
+                    ((MainStage) event.getStage()).getFSM(BODY_ID).changeState(BodyFSMStates.WORD_ADD);
+                    ((MainStage) event.getStage()).getFSM(HEADER_WORD_INPUT_ID).changeState(HeaderWordInputFSMStates.HIDE);
+
                 }
             });
             table.add(button).row();
