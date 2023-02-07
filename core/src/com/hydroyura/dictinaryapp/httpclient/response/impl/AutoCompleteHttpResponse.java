@@ -16,18 +16,19 @@ import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.AutoComplet
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOAutoCompleteResponse;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
 
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
 public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoCompleteResponse> {
 
-    private AppStarter app = (AppStarter) Gdx.app.getApplicationListener();
     private Table table;
 
     private TextButton.TextButtonStyle style;
 
     public AutoCompleteHttpResponse() {
+        super();
         this.converter = new AutoCompleteConverter();
     }
 
@@ -51,8 +52,17 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
                     TextButton button = (TextButton) event.getListenerActor();
                     Gdx.app.log(this.getClass().toString(), "clicked(), word = " + button.getText());
 
+                    if(table.getParent().findActor(BODY_SELECTED_WORD_ID) != null) table.getParent().removeActor(table.getParent().findActor(BODY_SELECTED_WORD_ID));
+
+                    TextButton buttonSelectedWord = new TextButton(item, style);
+                    buttonSelectedWord.setName(BODY_SELECTED_WORD_ID);
+                    buttonSelectedWord.setVisible(false);
+                    table.getParent().addActor(buttonSelectedWord);
+
+                    // change FSMs states
                     ((MainStage) event.getStage()).getFSM(BODY_ID).changeState(BodyFSMStates.WORD_ADD);
                     ((MainStage) event.getStage()).getFSM(HEADER_WORD_INPUT_ID).changeState(HeaderWordInputFSMStates.HIDE);
+                    ((MainStage) event.getStage()).getFSM(FOOTER_MAIN_ID).changeState(FooterMainFSMStates.HIDE);
 
                 }
             });

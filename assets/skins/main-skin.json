@@ -26,6 +26,10 @@
     "header-title": {
       "font": "header-title-font",
       "fontColor": "train-color"
+    },
+    "label-for-add-word": {
+      "font": "header-title-font",
+      "fontColor": "my-words-color"
     }
   },
 
@@ -82,6 +86,10 @@
     "clear-text": {
       "up": "btn-clear-word",
       "down": "btn-clear-word-pressed"
+    },
+    "pronunciation": {
+      "up": "btn-pronunciation",
+      "down": "btn-pronunciation-pressed"
     }
   }
 

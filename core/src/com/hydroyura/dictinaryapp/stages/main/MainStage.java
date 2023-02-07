@@ -25,6 +25,7 @@ import com.hydroyura.dictinaryapp.AppStarter;
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
 
 import java.util.*;
@@ -104,6 +105,8 @@ public class MainStage extends Stage {
             POSITION_X += 2 * Gdx.graphics.getWidth() / 7;
         };
 
+        fsms.put(FOOTER_MAIN_ID, new DefaultStateMachine<>(group, FooterMainFSMStates.DICTIONARY));
+
         return group;
     };
 
@@ -156,7 +159,25 @@ public class MainStage extends Stage {
         group.addActor(table);
         table.align(Align.topLeft);
 
+        // label-for-add-word
+        Label addWordTitle = new Label("", skin.get("label-for-add-word", LabelStyle.class));
+        addWordTitle.setName(BODY_WORDS_WORD_ADD_TITLE_ID);
+        addWordTitle.setPosition(Gdx.graphics.getWidth() / 2f, 550f);
+        addWordTitle.setVisible(false);
+        group.addActor(addWordTitle);
 
+        Label addWordTitleTranscription = new Label("", skin.get("label-for-add-word", LabelStyle.class));
+        addWordTitleTranscription.setName(BODY_WORDS_WORD_ADD_TITLE_TRANSCRIPTION_ID);
+        addWordTitleTranscription.setPosition(Gdx.graphics.getWidth() / 2f, 450f);
+        addWordTitleTranscription.setVisible(false);
+        group.addActor(addWordTitleTranscription);
+
+        ImageButton pronunciationBtn = new ImageButton(skin.get("pronunciation", ImageButtonStyle.class));
+        pronunciationBtn.setName(BODY_WORDS_WORD_ADD_PRONUNCIATION_ID);
+        pronunciationBtn.setSize(Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
+        pronunciationBtn.setPosition(Gdx.graphics.getWidth() / 2f - pronunciationBtn.getWidth() / 2f, Gdx.graphics.getHeight() * 0.75f);
+        pronunciationBtn.setVisible(false);
+        group.addActor(pronunciationBtn);
 
         fsms.put(BODY_ID, new DefaultStateMachine<>(group, BodyFSMStates.WORD_INPUT));
 

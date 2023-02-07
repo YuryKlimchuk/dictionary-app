@@ -4,11 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.Net.HttpResponseListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.ResponseConverter;
 
 public abstract class AbstractHttpResponse<DTO> implements HttpResponseListener {
 
     protected ResponseConverter<DTO> converter;
+
+    protected AppStarter app;
+
+    public AbstractHttpResponse() {
+        this.app = (AppStarter) Gdx.app.getApplicationListener();
+    }
 
     @Override
     public void handleHttpResponse(HttpResponse httpResponse) {

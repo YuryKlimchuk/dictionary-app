@@ -13,21 +13,21 @@ autocomplete-result-label
   index: -1
 autocomplete-result-label-pressed
   rotate: false
-  xy: 872, 176
+  xy: 3422, 350
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 btn-clear-word
   rotate: false
-  xy: 3422, 416
+  xy: 2832, 242
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
   index: -1
 btn-clear-word-pressed
   rotate: false
-  xy: 2726, 242
+  xy: 872, 150
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
@@ -72,6 +72,20 @@ btn-my-words-pressed
   xy: 698, 54
   size: 172, 172
   orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-pronunciation
+  rotate: false
+  xy: 2726, 228
+  size: 104, 90
+  orig: 104, 90
+  offset: 0, 0
+  index: -1
+btn-pronunciation-pressed
+  rotate: false
+  xy: 3422, 402
+  size: 104, 90
+  orig: 104, 90
   offset: 0, 0
   index: -1
 btn-train
