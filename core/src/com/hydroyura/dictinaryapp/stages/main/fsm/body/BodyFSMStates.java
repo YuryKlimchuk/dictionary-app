@@ -5,6 +5,13 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.httpclient.HttpClient;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
@@ -31,7 +38,9 @@ public enum BodyFSMStates implements State<Group> {
         }
     },
 
-    WORD_ADD{
+    WORD_ADD {
+
+
         @Override
         public void enter(Group entity) {
             super.enter(entity);
@@ -53,6 +62,43 @@ public enum BodyFSMStates implements State<Group> {
 
             entity.findActor(BODY_WORDS_WORD_ADD_PRONUNCIATION_ID).setVisible(true);
 
+            //Gdx.net.sendHttpRequest(null, ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse());
+            /*
+            ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient().post(
+                    HttpClient.URL_TRANSLATE,
+                    null,
+                    null,
+                    ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse()
+            );
+            */
+
+            sendRequest(word);
+
+        }
+
+        private void sendRequest(String text) {
+            String url2 = HttpClient.URL_TRANSLATE;
+            Map<String, String> headers2 = Map.of(
+                    "X-RapidAPI-Key", "244b5dd242msh2d660d8777daa5cp110e59jsn2bcfbca1afed",
+                    "X-RapidAPI-Host", "ai-translate.p.rapidapi.com",
+                    "content-type", "application/json"
+            );
+
+            Map<String, Object> body2 = new HashMap<>();
+            body2.put("texts", Arrays.asList(text));
+            body2.put("tls", Arrays.asList("ru"));
+            body2.put("sl", "en");
+
+            try {
+                ((AppStarter) Gdx.app.getApplicationListener()).getMapper().writeValueAsString(body2);
+                ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient().post(
+                        url2,
+                        headers2,
+                        ((AppStarter) Gdx.app.getApplicationListener()).getMapper().writeValueAsString(body2),
+                        ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
     };
 

@@ -6,119 +6,147 @@ filter: Nearest, Nearest
 repeat: none
 autocomplete-result-label
   rotate: false
-  xy: 2, 2
+  xy: 4044, 364
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 autocomplete-result-label-pressed
   rotate: false
-  xy: 3422, 350
+  xy: 4044, 312
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
+btn-add-translation
+  rotate: false
+  xy: 2726, 198
+  size: 788, 308
+  orig: 788, 308
+  offset: 0, 0
+  index: -1
 btn-clear-word
   rotate: false
-  xy: 2832, 242
+  xy: 3966, 338
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
   index: -1
 btn-clear-word-pressed
   rotate: false
-  xy: 872, 150
+  xy: 2, 2
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
   index: -1
 btn-dictionary
   rotate: false
-  xy: 176, 54
+  xy: 1215, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-dictionary-active
   rotate: false
-  xy: 2726, 320
+  xy: 1041, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-dictionary-pressed
   rotate: false
-  xy: 2900, 320
+  xy: 1389, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words
   rotate: false
-  xy: 3248, 320
+  xy: 2085, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words-active
   rotate: false
-  xy: 3074, 320
+  xy: 1737, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words-pressed
   rotate: false
-  xy: 698, 54
+  xy: 2259, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-pronunciation
   rotate: false
-  xy: 2726, 228
+  xy: 3966, 416
   size: 104, 90
   orig: 104, 90
   offset: 0, 0
   index: -1
 btn-pronunciation-pressed
   rotate: false
-  xy: 3422, 402
+  xy: 2433, 150
   size: 104, 90
   orig: 104, 90
   offset: 0, 0
   index: -1
+btn-select-collection
+  rotate: false
+  xy: 3516, 218
+  size: 448, 288
+  orig: 448, 288
+  offset: 0, 0
+  index: -1
 btn-train
   rotate: false
-  xy: 524, 54
+  xy: 1911, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-train-active
   rotate: false
-  xy: 2, 54
+  xy: 867, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-train-pressed
   rotate: false
-  xy: 350, 54
+  xy: 1563, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
+btn-translation
+  rotate: false
+  xy: 532, 129
+  size: 333, 111
+  orig: 333, 111
+  offset: 0, 0
+  index: -1
+btn-translation-selected
+  rotate: false
+  xy: 2, 80
+  size: 528, 160
+  orig: 528, 160
+  offset: 0, 0
+  index: -1
 field-word-input
   rotate: false
-  xy: 2, 228
+  xy: 2, 242
   size: 1360, 264
   orig: 1360, 264
   offset: 0, 0
   index: -1
 field-word-input-active
   rotate: false
-  xy: 1364, 228
+  xy: 1364, 242
   size: 1360, 264
   orig: 1360, 264
   offset: 0, 0

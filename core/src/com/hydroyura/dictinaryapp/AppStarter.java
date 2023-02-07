@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.data.repository.IRepository;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
+import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
@@ -37,6 +39,14 @@ public class AppStarter extends Game {
 
 	private HttpClient httpClient = new HttpClient();
 
+	public ObjectMapper getMapper() {
+		return mapper;
+	}
+
+	private ObjectMapper mapper = new ObjectMapper();
+
+	private TranslateHttpResponse translateHttpResponse;
+
 	private VerticalGroup searchResult;
 
 	private IRepository repository;
@@ -47,12 +57,14 @@ public class AppStarter extends Game {
 
 	public AppStarter(IRepository repository) {
 		this.repository = repository;
+
 	}
 
 	@Override
 	public void create() {
 		loadResources();
 		setScreen(new SplashScreen());
+		translateHttpResponse = new TranslateHttpResponse();
 	}
 
 	@Override
@@ -69,20 +81,46 @@ public class AppStarter extends Game {
 	}
 
 	private SkinParameter generateFonts() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/inter-bold.ttf"));
-		FreeTypeFontGenerator generator1 = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/inter.ttf"));
-
 		ObjectMap<String, Object> fonts = new ObjectMap<>();
+		FreeTypeFontGenerator boldFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Bold.ttf"));
+		String ALL_CHARACTERS = FreeTypeFontGenerator.DEFAULT_CHARS
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+				+ "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
+
+		int NORMAL_SIZE = Gdx.graphics.getHeight() / 54;
+
+		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
+		//boldFontParameter.color = new Color(0.129f, 0.188f, 0.349f, 1);
+		//boldFontParameter.color = Color.PINK;
+		boldFontParameter.size = NORMAL_SIZE;
+		boldFontParameter.characters = ALL_CHARACTERS;
+		fonts.put("bold-dark-blue-1_0", boldFontGenerator.generateFont(boldFontParameter));
+
+		boldFontParameter.size = (int) (NORMAL_SIZE * 2);
+		fonts.put("bold-dark-blue-2_0", boldFontGenerator.generateFont(boldFontParameter));
+
+		// ----------------------------------------------------
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Bold.ttf"));
+		FreeTypeFontGenerator generator1 = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Thin.ttf"));
+
+		//ObjectMap<String, Object> fonts = new ObjectMap<>();
 
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.color = new Color(33/255, 48/255, 89/255, 1);
 		parameter.size = Gdx.graphics.getWidth() / 25;
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+				+ "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
 		BitmapFont mainBtnsFont = generator.generateFont(parameter);
 		fonts.put("main-btns-font", mainBtnsFont);
 
 		FreeTypeFontParameter parameter1 = new FreeTypeFontParameter();
 		parameter1.color = new Color(33/255, 48/255, 89/255, 1);
 		parameter1.size = Gdx.graphics.getWidth() / 12;
+		parameter1.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+				+ "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
 		BitmapFont headerTitleFont = generator.generateFont(parameter1);
 		fonts.put("header-title-font", headerTitleFont);
 
@@ -129,4 +167,7 @@ public class AppStarter extends Game {
 		return ((MainStage) ((MainScreen) mainScreen).getStage());
 	}
 
+	public TranslateHttpResponse getTranslateHttpResponse() {
+		return translateHttpResponse;
+	}
 }

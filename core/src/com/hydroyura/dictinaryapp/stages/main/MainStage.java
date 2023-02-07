@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,28 +12,189 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
-import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
-import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
 public class MainStage extends Stage {
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @FunctionalInterface
+    private interface GroupGenerator {
+        Group generate();
+    }
+
+    static class GroupsData {
+
+        private static ObjectMap<String, GroupGenerator> data = new ObjectMap<>() {
+            {
+                put(BODY_ID, () -> {
+                    Group group = new Group();
+                    group.setName(BODY_ID);
+                    group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                    group.setPosition(0f, 0f);
+                    group.addActor(new Background(Color.WHITE));
+                    return group;
+                });
+
+                put(FOOTER_MAIN_ID, () -> {
+                    Group group = new Group();
+                    group.setName(FOOTER_MAIN_ID);
+
+                    return group;
+                });
+            }
+        };
+
+        public static ObjectMap<String, GroupGenerator> getData() {
+            return data;
+        }
+    }
+
+
+
+    public MainStage() {
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     //----------- FSM ------------------
     private DefaultStateMachine<Group, BodyFSMStates> fsmBody;
     private ObjectMap<String, DefaultStateMachine<Group, State<Group>>> fsms = new ObjectMap<>();
@@ -43,12 +203,14 @@ public class MainStage extends Stage {
 
     private Map<String, List<String>> FOOTER_MAIN_BTNS_SETTINGS = new HashMap<>() {
         {
-            put("MAIN_BTN_DICTIONARY", Arrays.asList("Slovar", "btn-dictionary"));
-            put("MAIN_BTN_MY_WORDS", Arrays.asList("My words", "btn-my-words"));
-            put("MAIN_BTN_TRAIN", Arrays.asList("Train", "btn-train"));
+            put("MAIN_BTN_DICTIONARY", Arrays.asList("Словарь", "btn-dictionary"));
+            put("MAIN_BTN_MY_WORDS", Arrays.asList("Мои слова", "btn-my-words"));
+            put("MAIN_BTN_TRAIN", Arrays.asList("Тренажер", "btn-train"));
         }
     };
+*/
 
+    /*
 
     private AppStarter app;
 
@@ -82,6 +244,16 @@ public class MainStage extends Stage {
         groups.put(BODY_ID, bodyCreate());
         groups.put(FOOTER_MAIN_ID, footerMainCreate());
         groups.put(HEADER_WORD_INPUT_ID, headerWordInputCreate());
+
+        //groups.put(BODY_ID, GroupsData.getData().get("").generate());
+
+
+        StreamSupport.stream(GroupsData.getData().spliterator(), false)
+                .collect(Collectors.toMap(
+                        entry -> entry.key,
+                        entry -> entry.value.generate()));
+
+
     }
 
     Group footerMainCreate() {
@@ -119,7 +291,8 @@ public class MainStage extends Stage {
         group.addActor(new Background(skin.getColor("dictionary-color")));
         addActor(group);
 
-        Label title = new Label("Slovar", skin.get("header-title", LabelStyle.class));
+        Label title = new Label("Словарь", skin.get("header-title", LabelStyle.class));
+        //title.setColor(Color.BLUE);
         title.setPosition(group.getWidth() / 2 - title.getWidth() / 2, group.getHeight() * 2 / 3);
         group.addActor(title);
 
@@ -148,7 +321,7 @@ public class MainStage extends Stage {
         group.setName(BODY_ID);
         group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         group.setPosition(0f, 0);
-        group.addActor(new Background(Color.SCARLET));
+        group.addActor(new Background(Color.WHITE));
         addActor(group);
 
         Table table = new Table(skin);
@@ -185,13 +358,7 @@ public class MainStage extends Stage {
     }
 
 
-    /**
-     * Find actor in group by present ids.
-     * @param groupId
-     * @param actorId
-     * @return Actor
-     * @param <T>
-     */
+
     public <T extends Actor> T findActor(String groupId, String actorId) {
         try {
             return groups.get(groupId).findActor(actorId);
@@ -206,6 +373,7 @@ public class MainStage extends Stage {
     }
 
 
+
     @Override
     public void draw() {
         super.draw();
@@ -214,7 +382,7 @@ public class MainStage extends Stage {
 
 
 
-
+*/
 
 
 

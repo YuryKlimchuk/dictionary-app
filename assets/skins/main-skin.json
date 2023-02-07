@@ -19,13 +19,20 @@
       "g": 0.788235294,
       "b": 0.364705882,
       "a": 1
+    },
+
+    "dark-blue" : {
+      "r": 0.129,
+      "g": 0.188,
+      "b": 0.349,
+      "a": 1
     }
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
     "header-title": {
-      "font": "header-title-font",
-      "fontColor": "train-color"
+      "font": "bold-dark-blue-2_0",
+      "fontColor": "dark-blue"
     },
     "label-for-add-word": {
       "font": "header-title-font",
@@ -45,30 +52,54 @@
       "btn-dictionary": {
         "up": "btn-dictionary",
         "down": "btn-dictionary-pressed",
-        "font": "main-btns-font"
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
       },
       "btn-dictionary-active": {
         "up": "btn-dictionary-active",
-        "font": "main-btns-font"
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
       },
 
       "btn-train": {
         "up": "btn-train",
         "down": "btn-train-pressed",
-        "font": "main-btns-font"
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
       },
       "btn-train-active": {
         "up": "btn-train-active",
-        "font": "main-btns-font"
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
       },
 
       "btn-my-words": {
         "up": "btn-my-words",
         "down": "btn-my-words-pressed",
-        "font": "main-btns-font"
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
       },
       "btn-my-words-active": {
         "up": "btn-my-words-active",
+        "font": "bold-dark-blue-1_0",
+        "fontColor": "dark-blue"
+      },
+
+
+      "btn-translation": {
+        "up": "btn-translation",
+        "font": "main-btns-font"
+      },
+      "btn-translation-selected": {
+        "up": "btn-translation-selected",
+        "font": "main-btns-font"
+      },
+      "btn-select-collection": {
+        "up": "btn-select-collection",
+        "font": "main-btns-font"
+      },
+      "btn-add-translation": {
+        "up": "btn-add-translation",
         "font": "main-btns-font"
       }
   },

@@ -1,5 +1,6 @@
 package com.hydroyura.dictinaryapp.httpclient.response.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
@@ -7,6 +8,13 @@ import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.TranslateCo
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOTranslateResponse;
 
 public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResponse> {
+
+    public String getTranslate() {
+        return translate;
+    }
+
+    private String translate;
+    private boolean isTranslateReady = false;
 
     public TranslateHttpResponse() {
         super();
@@ -16,10 +24,25 @@ public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResp
 
     @Override
     public void handleHttpResponse(HttpResponse httpResponse) {
-        super.handleHttpResponse(httpResponse);
+        //super.handleHttpResponse(httpResponse);
 
         DTOTranslateResponse dto = converter.convert(httpResponse);
 
+        Gdx.app.log(this.getClass().toString(), "Translate is [" + dto.getTexts() + "]");
 
+        isTranslateReady = true;
+        translate = dto.getTexts();
+    }
+
+    public void setTranslate(String translate) {
+        this.translate = translate;
+    }
+
+    public boolean isTranslateReady() {
+        return isTranslateReady;
+    }
+
+    public void setTranslateReady(boolean translateReady) {
+        isTranslateReady = translateReady;
     }
 }

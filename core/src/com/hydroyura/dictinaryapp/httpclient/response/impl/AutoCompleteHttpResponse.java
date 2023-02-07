@@ -60,10 +60,11 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
                     table.getParent().addActor(buttonSelectedWord);
 
                     // change FSMs states
+                    /*
                     ((MainStage) event.getStage()).getFSM(BODY_ID).changeState(BodyFSMStates.WORD_ADD);
                     ((MainStage) event.getStage()).getFSM(HEADER_WORD_INPUT_ID).changeState(HeaderWordInputFSMStates.HIDE);
                     ((MainStage) event.getStage()).getFSM(FOOTER_MAIN_ID).changeState(FooterMainFSMStates.HIDE);
-
+                    */
                 }
             });
             table.add(button).row();
@@ -72,7 +73,8 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
     }
 
     private Table findTable() {
-        return (Table) app.getMainStage().findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
+        return null;
+        //return (Table) app.getMainStage().findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
     }
 
     private TextButtonStyle findStyle() {
