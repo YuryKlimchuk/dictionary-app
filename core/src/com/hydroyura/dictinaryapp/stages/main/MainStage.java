@@ -4,31 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
-import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
-import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.listners.FooterMainListener;
 
 import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
+import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.BODY_ID;
+import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.FOOTER_MAIN_ID;
 
 public class MainStage extends Stage {
 
@@ -38,11 +28,13 @@ public class MainStage extends Stage {
 
     private ObjectMap<String, Group> groups = new ObjectMap<>();
 
+    private ObjectMap<String, DefaultStateMachine<Group, State<Group>>> fsms = new ObjectMap<>();
 
+    private ObjectMap<String, State<Group>> fsmInitialStates = new ObjectMap<>();
 
-
-
-
+    public DefaultStateMachine<Group, State<Group>> getFsm(String id) {
+        return fsms.get(id);
+    }
 
 
 
@@ -66,11 +58,11 @@ public class MainStage extends Stage {
         Group generate(Skin skin);
     }
 
-    static class GroupsData {
+    class GroupsData {
 
-        static Map<String, GroupGenerator> data = new LinkedHashMap<>();
+         Map<String, GroupGenerator> data = new LinkedHashMap<>();
 
-        static {
+        {
             data.put(BODY_ID, (skin) -> {
                 Group group = new Group();
                 group.setName(BODY_ID);
@@ -95,12 +87,16 @@ public class MainStage extends Stage {
                     }
                 };
 
+                FooterMainListener listener = new FooterMainListener(MainStage.this);
+
                 int POSITION_X = Gdx.graphics.getWidth() / 7;
                 int POSITION_Y = POSITION_X / 2;
                 for(Map.Entry<String, List<String>> entry: FOOTER_MAIN_BTNS_SETTINGS.entrySet()) {
                     String key = entry.getKey();
                     List<String> value = entry.getValue();
                     ImageTextButton btn = new ImageTextButton(value.get(0), skin.get(value.get(1), ImageTextButtonStyle.class));
+                    btn.setName(key);
+                    btn.addListener(listener);
                     btn.setSize(Gdx.graphics.getWidth()/7, Gdx.graphics.getWidth()/7);
                     btn.setPosition(POSITION_X, POSITION_Y);
                     btn.getLabelCell().padTop(btn.getHeight());
@@ -118,7 +114,7 @@ public class MainStage extends Stage {
         }
 
 
-        public static Map<String, GroupGenerator> getData() {
+        public Map<String, GroupGenerator> getData() {
             return data;
         }
     }
@@ -129,11 +125,22 @@ public class MainStage extends Stage {
         app = (AppStarter) Gdx.app.getApplicationListener();
         Skin skin = app.getResource("skins/main-skin.json", Skin.class);
 
-        GroupsData.getData().forEach(
+        fsmInitialStates.put(FOOTER_MAIN_ID, FooterMainFSMStates.DICTIONARY);
+
+        GroupsData groupsData = new GroupsData();
+        groupsData.getData().forEach(
                 (key, value) -> {
                     Group group = value.generate(skin);
                     addActor(group);
                     groups.put(key, group);
+                }
+        );
+
+        StreamSupport.stream(groups.spliterator(), false).forEach(
+                entry -> {
+                    DefaultStateMachine<Group, State<Group>> fsm = new DefaultStateMachine<>(entry.value);
+                    fsm.changeState(fsmInitialStates.get(entry.key));
+                    fsms.put(entry.key, fsm);
                 }
         );
 
@@ -146,6 +153,7 @@ public class MainStage extends Stage {
 
     @Override
     public void draw() {
+        StreamSupport.stream(fsms.spliterator(), false).forEach(entry -> entry.value.update());
         super.draw();
     }
 
