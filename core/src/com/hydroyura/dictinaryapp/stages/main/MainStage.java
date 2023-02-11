@@ -23,10 +23,8 @@ import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,8 +34,9 @@ public class MainStage extends Stage {
 
 
 
+    private AppStarter app;
 
-
+    private ObjectMap<String, Group> groups = new ObjectMap<>();
 
 
 
@@ -64,32 +63,62 @@ public class MainStage extends Stage {
 
     @FunctionalInterface
     private interface GroupGenerator {
-        Group generate();
+        Group generate(Skin skin);
     }
 
     static class GroupsData {
 
-        private static ObjectMap<String, GroupGenerator> data = new ObjectMap<>() {
-            {
-                put(BODY_ID, () -> {
-                    Group group = new Group();
-                    group.setName(BODY_ID);
-                    group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-                    group.setPosition(0f, 0f);
-                    group.addActor(new Background(Color.WHITE));
-                    return group;
-                });
+        static Map<String, GroupGenerator> data = new LinkedHashMap<>();
 
-                put(FOOTER_MAIN_ID, () -> {
-                    Group group = new Group();
-                    group.setName(FOOTER_MAIN_ID);
+        static {
+            data.put(BODY_ID, (skin) -> {
+                Group group = new Group();
+                group.setName(BODY_ID);
+                group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                group.setPosition(0f, 0f);
+                group.addActor(new Background(Color.WHITE));
+                return group;
+            });
 
-                    return group;
-                });
-            }
-        };
+            data.put(FOOTER_MAIN_ID, (skin) -> {
+                Group group = new Group();
+                group.setName(FOOTER_MAIN_ID);
+                group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
+                group.setPosition(0f, 0f);
+                group.addActor(new Background(Color.WHITE));
 
-        public static ObjectMap<String, GroupGenerator> getData() {
+                Map<String, List<String>> FOOTER_MAIN_BTNS_SETTINGS = new HashMap<>() {
+                    {
+                        put("MAIN_BTN_DICTIONARY", Arrays.asList("Словарь", "btn-dictionary"));
+                        put("MAIN_BTN_MY_WORDS", Arrays.asList("Мои слова", "btn-my-words"));
+                        put("MAIN_BTN_TRAIN", Arrays.asList("Тренажер", "btn-train"));
+                    }
+                };
+
+                int POSITION_X = Gdx.graphics.getWidth() / 7;
+                int POSITION_Y = POSITION_X / 2;
+                for(Map.Entry<String, List<String>> entry: FOOTER_MAIN_BTNS_SETTINGS.entrySet()) {
+                    String key = entry.getKey();
+                    List<String> value = entry.getValue();
+                    ImageTextButton btn = new ImageTextButton(value.get(0), skin.get(value.get(1), ImageTextButtonStyle.class));
+                    btn.setSize(Gdx.graphics.getWidth()/7, Gdx.graphics.getWidth()/7);
+                    btn.setPosition(POSITION_X, POSITION_Y);
+                    btn.getLabelCell().padTop(btn.getHeight());
+                    group.addActor(btn);
+                    POSITION_X += 2 * Gdx.graphics.getWidth() / 7;
+                };
+
+                Line line = new Line(Color.GRAY);
+                line.setY(group.getHeight());
+
+                group.addActor(line);
+
+                return group;
+            });
+        }
+
+
+        public static Map<String, GroupGenerator> getData() {
             return data;
         }
     }
@@ -97,9 +126,16 @@ public class MainStage extends Stage {
 
 
     public MainStage() {
+        app = (AppStarter) Gdx.app.getApplicationListener();
+        Skin skin = app.getResource("skins/main-skin.json", Skin.class);
 
-
-
+        GroupsData.getData().forEach(
+                (key, value) -> {
+                    Group group = value.generate(skin);
+                    addActor(group);
+                    groups.put(key, group);
+                }
+        );
 
     }
 
@@ -108,7 +144,10 @@ public class MainStage extends Stage {
 
 
 
-
+    @Override
+    public void draw() {
+        super.draw();
+    }
 
 
 
