@@ -3,22 +3,13 @@ package com.hydroyura.dictinaryapp.stages.main.fsm.footer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.hydroyura.dictinaryapp.AppStarter;
 
-
-/*
-
-                        put("MAIN_BTN_DICTIONARY", Arrays.asList("Словарь", "btn-dictionary"));
-                        put("MAIN_BTN_MY_WORDS", Arrays.asList("Мои слова", "btn-my-words"));
-                        put("MAIN_BTN_TRAIN", Arrays.asList("Тренажер", "btn-train"));
-
- */
 
 public enum FooterMainFSMStates implements State<Group> {
 
@@ -73,7 +64,11 @@ public enum FooterMainFSMStates implements State<Group> {
         @Override
         public void enter(Group entity) {
             super.enter(entity);
-            entity.setVisible(false);
+            MoveToAction action = new MoveToAction();
+            action.setPosition(0f, -entity.getHeight());
+            action.setDuration(1.0f);
+
+            entity.addAction(action);
         }
     };
 

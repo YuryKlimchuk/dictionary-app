@@ -26,6 +26,13 @@
       "g": 0.188,
       "b": 0.349,
       "a": 1
+    },
+
+    "orange" : {
+      "r": 1,
+      "g": 0.694117647,
+      "b": 0.215686275,
+      "a": 1
     }
   },
 
@@ -35,16 +42,23 @@
       "fontColor": "dark-blue"
     },
     "label-for-add-word": {
-      "font": "header-title-font",
-      "fontColor": "my-words-color"
+      "font": "bold-dark-blue-2_5",
+      "fontColor": "dark-blue"
+    },
+
+    "label-transcription": {
+      "font": "normal-dark-blue-1_5",
+      "fontColor": "dark-blue"
     }
+
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "autocomplete-result-label": {
       "up": "autocomplete-result-label",
       "down": "autocomplete-result-label-pressed",
-      "font": "word-input-font"
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue"
     }
   },
 
@@ -106,8 +120,8 @@
 
   "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
     "field-word-input": {
-      "font": "word-input-font",
-      "fontColor": "train-color",
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue",
       "background": "field-word-input",
       "focusedBackground": "field-word-input-active"
     }

@@ -10,6 +10,7 @@ import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +39,38 @@ public enum BodyFSMStates implements State<Group> {
         }
     },
 
-    WORD_ADD {
+    SELECT_TRANSLATE {
 
+        private boolean isReadyTranslate = false;
+        private Collection<String> translations;
+
+        @Override
+        public void setTranslations() {
+            Gdx.app.log("LOGGGGG", "F....................FFFF");
+            this.isReadyTranslate = true;
+        }
+
+        private void clear() {
+            this.isReadyTranslate = false;
+            this.translations = null;
+        }
+
+        @Override
+        public void update(Group entity) {
+            super.update(entity);
+            if(isReadyTranslate) {
+                Gdx.app.log(this.getClass().toString(), "translate is ready");
+                clear();
+            }
+        }
 
         @Override
         public void enter(Group entity) {
             super.enter(entity);
+
             String word = ((TextButton) entity.findActor(BODY_SELECTED_WORD_ID)).getText().toString();
             Gdx.app.log(this.getClass().toString(), "Word to add -> " + word);
+
             Label label = entity.findActor(BODY_WORDS_WORD_ADD_TITLE_ID);
             label.setVisible(true);
             label.setText(word);
@@ -62,18 +87,7 @@ public enum BodyFSMStates implements State<Group> {
 
             entity.findActor(BODY_WORDS_WORD_ADD_PRONUNCIATION_ID).setVisible(true);
 
-            //Gdx.net.sendHttpRequest(null, ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse());
-            /*
-            ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient().post(
-                    HttpClient.URL_TRANSLATE,
-                    null,
-                    null,
-                    ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse()
-            );
-            */
-
             sendRequest(word);
-
         }
 
         private void sendRequest(String text) {
@@ -122,5 +136,9 @@ public enum BodyFSMStates implements State<Group> {
     public boolean onMessage(Group entity, Telegram telegram) {
         Gdx.app.log(this.getClass().toString(), "onMessage to state: " + this.toString());
         return false;
+    }
+
+    public void setTranslations() {
+        throw new RuntimeException("Method is blocked");
     }
 }

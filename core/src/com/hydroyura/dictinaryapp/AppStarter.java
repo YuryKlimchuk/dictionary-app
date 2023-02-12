@@ -80,9 +80,13 @@ public class AppStarter extends Game {
 		assetManager.load("skins/main-skin.json", Skin.class, generateFonts());
 	}
 
+
+	// FIXME: clean this method
 	private SkinParameter generateFonts() {
 		ObjectMap<String, Object> fonts = new ObjectMap<>();
 		FreeTypeFontGenerator boldFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Bold.ttf"));
+		FreeTypeFontGenerator normalFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Thin.ttf"));
+
 		String ALL_CHARACTERS = FreeTypeFontGenerator.DEFAULT_CHARS
 				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
 				+ "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
@@ -91,14 +95,24 @@ public class AppStarter extends Game {
 		int NORMAL_SIZE = Gdx.graphics.getHeight() / 54;
 
 		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
-		//boldFontParameter.color = new Color(0.129f, 0.188f, 0.349f, 1);
-		//boldFontParameter.color = Color.PINK;
+
 		boldFontParameter.size = NORMAL_SIZE;
 		boldFontParameter.characters = ALL_CHARACTERS;
 		fonts.put("bold-dark-blue-1_0", boldFontGenerator.generateFont(boldFontParameter));
 
+		boldFontParameter.size = (int) (NORMAL_SIZE * 1.5);
+		fonts.put("bold-dark-blue-1_5", boldFontGenerator.generateFont(boldFontParameter));
+		fonts.put("normal-dark-blue-1_5", normalFontGenerator.generateFont(boldFontParameter));
+
 		boldFontParameter.size = (int) (NORMAL_SIZE * 2);
 		fonts.put("bold-dark-blue-2_0", boldFontGenerator.generateFont(boldFontParameter));
+
+		boldFontParameter.size = (int) (NORMAL_SIZE * 2.5);
+		fonts.put("bold-dark-blue-2_5", boldFontGenerator.generateFont(boldFontParameter));
+
+		// ----------------------------------------------------
+
+
 
 		// ----------------------------------------------------
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/fonts/Inter-Bold.ttf"));

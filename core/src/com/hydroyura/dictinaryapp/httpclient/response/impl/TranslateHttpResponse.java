@@ -6,6 +6,7 @@ import com.badlogic.gdx.Net.HttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.TranslateConverter;
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOTranslateResponse;
+import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 
 public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResponse> {
 
@@ -30,8 +31,13 @@ public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResp
 
         Gdx.app.log(this.getClass().toString(), "Translate is [" + dto.getTexts() + "]");
 
+
         isTranslateReady = true;
         translate = dto.getTexts();
+
+        BodyFSMStates.SELECT_TRANSLATE.setTranslations();
+
+
     }
 
     public void setTranslate(String translate) {

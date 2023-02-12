@@ -1,33 +1,40 @@
-package com.hydroyura.dictinaryapp.stages.main;
+package com.hydroyura.dictinaryapp.stages.customs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Background extends Actor {
+
+// FIXME: add builder
+public class Line extends Actor {
 
     private ShapeRenderer shapeRenderer;
 
-    public Background() {
-        this(Color.BLUE);
+    public Line() {
+        this(Color.BLACK);
     }
 
-    public Background(Color color) {
+    public Line(Color color) {
         setColor(color);
-        this.shapeRenderer = new ShapeRenderer();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if(shapeRenderer == null) this.shapeRenderer = new ShapeRenderer();
+
         if(batch.isDrawing()) batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
             shapeRenderer.setColor(getColor());
-            shapeRenderer.rect(
-                    getParent().getX(), getParent().getY(),
-                    getParent().getWidth(), getParent().getHeight());
+            shapeRenderer.line(
+                    0f, getY(), getParent().getWidth(), getY()
+            );
         shapeRenderer.end();
+
         if(!batch.isDrawing()) batch.begin();
     }
+
 }

@@ -2,22 +2,20 @@ package com.hydroyura.dictinaryapp.httpclient.response.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.AutoCompleteConverter;
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOAutoCompleteResponse;
-import com.hydroyura.dictinaryapp.stages.main.MainStage;
-import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.stages.customs.Line;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
-import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderWordInputFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.listners.AutoCompleteWordListener;
 
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
@@ -27,9 +25,12 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
 
     private TextButton.TextButtonStyle style;
 
+    private ClickListener clickListener;
+
     public AutoCompleteHttpResponse() {
         super();
         this.converter = new AutoCompleteConverter();
+        this.clickListener = new AutoCompleteWordListener();
     }
 
     @Override
@@ -45,36 +46,17 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
         convertedResponse.getAutoCompleteTexts().forEach(item -> {
             TextButton button = new TextButton(item, style);
 
-            button.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    super.clicked(event, x, y);
-                    TextButton button = (TextButton) event.getListenerActor();
-                    Gdx.app.log(this.getClass().toString(), "clicked(), word = " + button.getText());
+            button.addListener(clickListener);
 
-                    if(table.getParent().findActor(BODY_SELECTED_WORD_ID) != null) table.getParent().removeActor(table.getParent().findActor(BODY_SELECTED_WORD_ID));
+            table.add(button).width(table.getWidth()).expandX().align(Align.left).row();
+            table.add(new Line()).row();
 
-                    TextButton buttonSelectedWord = new TextButton(item, style);
-                    buttonSelectedWord.setName(BODY_SELECTED_WORD_ID);
-                    buttonSelectedWord.setVisible(false);
-                    table.getParent().addActor(buttonSelectedWord);
-
-                    // change FSMs states
-                    /*
-                    ((MainStage) event.getStage()).getFSM(BODY_ID).changeState(BodyFSMStates.WORD_ADD);
-                    ((MainStage) event.getStage()).getFSM(HEADER_WORD_INPUT_ID).changeState(HeaderWordInputFSMStates.HIDE);
-                    ((MainStage) event.getStage()).getFSM(FOOTER_MAIN_ID).changeState(FooterMainFSMStates.HIDE);
-                    */
-                }
-            });
-            table.add(button).row();
         });
 
     }
 
     private Table findTable() {
-        return null;
-        //return (Table) app.getMainStage().findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
+        return (Table) app.getMainStage().findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
     }
 
     private TextButtonStyle findStyle() {

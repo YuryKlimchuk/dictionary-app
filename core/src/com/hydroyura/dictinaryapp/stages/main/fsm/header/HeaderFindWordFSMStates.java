@@ -1,25 +1,31 @@
 package com.hydroyura.dictinaryapp.stages.main.fsm.header;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
-public enum HeaderWordInputFSMStates implements State<Group> {
+public enum HeaderFindWordFSMStates implements State<Group> {
 
     HIDE() {
         @Override
         public void enter(Group entity) {
-            super.enter(entity);
-            entity.setVisible(false);
+            MoveToAction action = new MoveToAction();
+            action.setPosition(0f, Gdx.graphics.getHeight());
+            action.setDuration(1.0f);
+
+            entity.addAction(action);
         }
     },
 
-    WAIT_WORD_INPUT() {},
+    DISPLAY() {};
 
-    WORD_INPUT() {};
 
     @Override
     public void enter(Group entity) {
+
 
     }
 
