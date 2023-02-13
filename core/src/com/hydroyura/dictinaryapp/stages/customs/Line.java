@@ -30,9 +30,13 @@ public class Line extends Actor {
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
             shapeRenderer.setColor(getColor());
             shapeRenderer.line(
-                    0f, getY(), getParent().getWidth(), getY()
+                    0f, getY() + getParent().getY(), getParent().getWidth(), getY() + getParent().getY()
             );
         shapeRenderer.end();
+
+        Gdx.app.log("LINE", "X = " + getX() + "; Y = " + getY());
+        Gdx.app.log("LINE_PARRENT", "X = " + getParent().getX() + "; Y = " + getParent().getY());
+
 
         if(!batch.isDrawing()) batch.begin();
     }
