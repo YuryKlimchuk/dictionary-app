@@ -17,7 +17,7 @@ public class MainScreen implements Screen {
     @Override
     public void show() {
         stage = new MainStage();
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
         Gdx.input.setInputProcessor(stage);
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.screens.TestScreen;
 
 public class SplashScreen implements Screen {
 
@@ -21,6 +22,7 @@ public class SplashScreen implements Screen {
         if(app.getAssetManagerUpdate()) {
             Gdx.app.log(this.getClass().toString(), "resources loading was finished");
             app.setMainScreen();
+            // app.setScreen(new TestScreen());
         }
 
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);

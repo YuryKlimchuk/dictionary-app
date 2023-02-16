@@ -8,6 +8,11 @@ import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.TranslateCo
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOTranslateResponse;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResponse> {
 
     public String getTranslate() {
@@ -35,7 +40,10 @@ public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResp
         isTranslateReady = true;
         translate = dto.getTexts();
 
-        BodyFSMStates.SELECT_TRANSLATE.setTranslations();
+        List<String> arr = new ArrayList<>();
+        arr.add(translate);
+
+        BodyFSMStates.SELECT_TRANSLATE.setTranslations(arr);
 
 
     }

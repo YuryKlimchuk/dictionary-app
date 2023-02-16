@@ -59,6 +59,14 @@
       "down": "autocomplete-result-label-pressed",
       "font": "bold-dark-blue-1_5",
       "fontColor": "dark-blue"
+    },
+    "btn-translation": {
+      "up": "btn-translation",
+      "font": "main-btns-font"
+    },
+    "btn-translation-selected": {
+      "up": "btn-translation-selected",
+      "font": "main-btns-font"
     }
   },
 
@@ -97,16 +105,6 @@
         "up": "btn-my-words-active",
         "font": "bold-dark-blue-1_0",
         "fontColor": "dark-blue"
-      },
-
-
-      "btn-translation": {
-        "up": "btn-translation",
-        "font": "main-btns-font"
-      },
-      "btn-translation-selected": {
-        "up": "btn-translation-selected",
-        "font": "main-btns-font"
       },
       "btn-select-collection": {
         "up": "btn-select-collection",

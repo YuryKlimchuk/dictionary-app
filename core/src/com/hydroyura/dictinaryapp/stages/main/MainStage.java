@@ -89,6 +89,16 @@ public class MainStage extends Stage {
                 pronunciationBtn.setVisible(false);
                 group.addActor(pronunciationBtn);
 
+                // Table for displaying translate variants
+                Table translateVariantsTable = new Table();
+                translateVariantsTable.setName(BODY_TRANSLATION_VARIANTS_TABLE_ID);
+                translateVariantsTable.setWidth(Gdx.graphics.getWidth() * 0.9f);
+                translateVariantsTable.setPosition(Gdx.graphics.getWidth() * 0.05f, Gdx.graphics.getHeight() * 0.75f);
+                translateVariantsTable.align(Align.topLeft);
+                translateVariantsTable.setVisible(false);
+                group.addActor(translateVariantsTable);
+
+
                 return group;
             });
 

@@ -34,8 +34,8 @@ public class Line extends Actor {
             );
         shapeRenderer.end();
 
-        Gdx.app.log("LINE", "X = " + getX() + "; Y = " + getY());
-        Gdx.app.log("LINE_PARRENT", "X = " + getParent().getX() + "; Y = " + getParent().getY());
+        //Gdx.app.log("LINE", "X = " + getX() + "; Y = " + getY());
+        //Gdx.app.log("LINE_PARENT", "X = " + getParent().getX() + "; Y = " + getParent().getY());
 
 
         if(!batch.isDrawing()) batch.begin();
