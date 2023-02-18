@@ -17,6 +17,7 @@ import com.hydroyura.dictinaryapp.stages.customs.Background;
 import com.hydroyura.dictinaryapp.stages.customs.Line;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterWordAddFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.fsm.header.HeaderFindWordFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.listners.BtnClearTextListener;
 import com.hydroyura.dictinaryapp.stages.main.listners.FieldWordInputListener;
@@ -179,6 +180,17 @@ public class MainStage extends Stage {
 
                 return group;
             });
+
+            data.put(FOOTER_ADD_WORD_ID, (skin) -> {
+                Group group = new Group();
+                group.setName(FOOTER_ADD_WORD_ID);
+                group.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 5);
+                group.setPosition(0f, -1 * Gdx.graphics.getHeight() / 5);
+                group.addActor(new Background(skin.getColor("orange")));
+                addActor(group);
+
+                return group;
+            });
         }
 
 
@@ -196,6 +208,7 @@ public class MainStage extends Stage {
         fsmInitialStates.put(FOOTER_MAIN_ID, FooterMainFSMStates.DICTIONARY);
         fsmInitialStates.put(HEADER_FIND_WORD_ID, HeaderFindWordFSMStates.DISPLAY);
         fsmInitialStates.put(BODY_ID, BodyFSMStates.WORD_INPUT);
+        fsmInitialStates.put(FOOTER_ADD_WORD_ID, FooterWordAddFSMStates.HIDE);
 
         GroupsData groupsData = new GroupsData();
         groupsData.getData().forEach(

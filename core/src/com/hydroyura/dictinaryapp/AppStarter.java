@@ -20,6 +20,7 @@ import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
+import com.hydroyura.dictinaryapp.stages.CONSTANTS;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.MainStageConstants;
 
