@@ -1,20 +1,17 @@
 package com.hydroyura.dictinaryapp.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.hydroyura.dictinaryapp.AppStarter;
-import com.hydroyura.dictinaryapp.stages.main.MainStage;
 
-import javax.xml.validation.Schema;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestScreen extends ScreenAdapter {
 
@@ -22,7 +19,7 @@ public class TestScreen extends ScreenAdapter {
     Skin skin;
     @Override
     public void show() {
-        skin = ((AppStarter) Gdx.app.getApplicationListener()).getResource("skins/main-skin.json", Skin.class);
+        skin = AppStarter.getInstance().getSkin("skins/main-skin.json");
         TextButton.TextButtonStyle style = skin.get("btn-translation", TextButton.TextButtonStyle.class);
         stage = new Stage();
         stage.setDebugAll(true);
@@ -56,76 +53,6 @@ public class TestScreen extends ScreenAdapter {
             }
             table.add(tmpTable).align(Align.left).row();
         }
-
-        /*
-        while(iterator.hasNext()) {
-            Table tmpTable = new Table();
-            TextButton b1 = new TextButton(iterator.next(), style);
-            tmpTable.add(b1)
-                    .width((b1.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                    .height(Gdx.graphics.getHeight() / 22).pad(15);
-
-            while(iterator.hasNext()) {
-                TextButton b2 = new TextButton(iterator.next(), style);
-
-                iterator.forEachRemaining();
-
-            }
-
-// ((Table) table.getCells().get(2).getActor()).getCells()
-
-        }
-         */
-
-        // table.getCells().removeIndex(3).getActor()
-
-
-
-
-
-/*
-
-        strArr.forEach(name -> {
-            table.add(new TextButton(name, style))
-                    .width((name.length() + 2) * Gdx.graphics.getWidth() / 35)
-                    .height(Gdx.graphics.getHeight() / 22).pad(15);
-            Gdx.app.log("TABLE_WIDTH", String.valueOf(table.getPrefWidth()));
-
-
-        });
-*/
-
-        /*
-        Table tmp1 = new Table();
-        TextButton b11 = new TextButton("sad", style);
-        tmp1.add(b11)
-                .width((b11.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                .height(Gdx.graphics.getHeight() / 22).pad(15);
-
-        TextButton b12 = new TextButton("ddsad", style);
-        tmp1.add(b12)
-                .width((b12.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                .height(Gdx.graphics.getHeight() / 22).pad(15);
-
-        TextButton b13 = new TextButton("saGGd", style);
-        tmp1.add(b13)
-                .width((b13.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                .height(Gdx.graphics.getHeight() / 22).pad(15);
-        table.add(tmp1).align(Align.left).row();
-
-        Table tmp2 = new Table();
-        TextButton b21 = new TextButton("sdddad", style);
-        tmp2.add(b21)
-                .width((b21.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                .height(Gdx.graphics.getHeight() / 22).pad(15);
-
-        TextButton b22 = new TextButton("ddd", style);
-        tmp2.add(b22)
-                .width((b22.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
-                .height(Gdx.graphics.getHeight() / 22).pad(15);
-        table.add(tmp2).align(Align.left);
-        */
-
 
         stage.addActor(table);
     }

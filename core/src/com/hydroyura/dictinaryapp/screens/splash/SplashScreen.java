@@ -21,6 +21,7 @@ public class SplashScreen implements Screen {
 
         if(app.getAssetManagerUpdate()) {
             Gdx.app.log(this.getClass().toString(), "resources loading was finished");
+            app.initialContext();
             app.setMainScreen();
             // app.setScreen(new TestScreen());
         }

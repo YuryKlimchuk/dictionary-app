@@ -94,7 +94,7 @@ public enum FooterMainFSMStates implements State<Group> {
     }
 
     public void setStyle(String styleName, Button btn) {
-        Skin skin = ((AppStarter) Gdx.app.getApplicationListener()).getResource("skins/main-skin.json", Skin.class);
+        Skin skin = AppStarter.getInstance().getSkin("skins/main-skin.json");
         ImageTextButtonStyle style = skin.get(styleName, ImageTextButtonStyle.class);
         btn.setStyle(style);
     }

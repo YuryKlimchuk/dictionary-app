@@ -3,14 +3,12 @@ package com.hydroyura.dictinaryapp;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader.SkinParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -20,35 +18,53 @@ import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
 import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
-import com.hydroyura.dictinaryapp.stages.CONSTANTS;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
-import com.hydroyura.dictinaryapp.stages.main.MainStageConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-	FIXME:
-	1. add method returned instance
-	2. create container for storing beans
- */
+
 public class AppStarter extends Game {
 
+	private static AppStarter app;
 	private AssetManager assetManager = new AssetManager();
+	private Map<Class<?>, Object> context = new HashMap<>();
+
+
+	public <T> T getBean(Class<T> clazz) {
+		if(!context.containsKey(clazz)) throw new RuntimeException("Don`t have bean of current class type.");
+		return clazz.cast(context.get(clazz));
+	}
+
+	public void initialContext() {
+		context.put(ObjectMapper.class, new ObjectMapper());
+		context.put(TranslateHttpResponse.class, new TranslateHttpResponse());
+		context.put(HttpClient.class, new HttpClient());
+	}
+
+	public static AppStarter getInstance() {
+		return app;
+	}
+
+	public Skin getSkin(String resourceName) {
+		return assetManager.get(resourceName, Skin.class);
+	}
+
+	public <T> T getStyle(String skinName, String resourceName, Class<T> clazz) {
+		return getSkin(skinName).get(resourceName, clazz);
+	}
+
+
+
+
+
+
+
+
+
 	private Screen mainScreen = new MainScreen();
 	private Screen splashScreen = new SplashScreen();
 
-	private HttpClient httpClient = new HttpClient();
-
-	public ObjectMapper getMapper() {
-		return mapper;
-	}
-
-	private ObjectMapper mapper = new ObjectMapper();
-
-	private TranslateHttpResponse translateHttpResponse;
-
-	private VerticalGroup searchResult;
 
 	private IRepository repository;
 
@@ -58,14 +74,14 @@ public class AppStarter extends Game {
 
 	public AppStarter(IRepository repository) {
 		this.repository = repository;
-
+		this.app = this;
 	}
 
 	@Override
 	public void create() {
 		loadResources();
 		setScreen(new SplashScreen());
-		translateHttpResponse = new TranslateHttpResponse();
+
 	}
 
 	@Override
@@ -149,13 +165,6 @@ public class AppStarter extends Game {
 		return new SkinParameter(fonts);
 	}
 
-	public float getLoadingProgress() {
-		return assetManager.getProgress();
-	}
-
-	public <T> T getResource(String resourceName, Class<T> clazz) {
-		return assetManager.get(resourceName, clazz);
-	}
 
 	public boolean getAssetManagerUpdate() {
 		return assetManager.update();
@@ -165,24 +174,10 @@ public class AppStarter extends Game {
 		setScreen(mainScreen);
 	}
 
-	public HttpClient getHttpClient() {
-		return httpClient;
-	}
-
-	public VerticalGroup getSearchResult() {
-		return searchResult;
-	}
-
-	public void setSearchResult(VerticalGroup searchResult) {
-		this.searchResult = searchResult;
-	}
-
 
 	public MainStage getMainStage() {
 		return ((MainStage) ((MainScreen) mainScreen).getStage());
 	}
 
-	public TranslateHttpResponse getTranslateHttpResponse() {
-		return translateHttpResponse;
-	}
+
 }

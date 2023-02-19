@@ -21,7 +21,7 @@ public class AutoCompleteWordListener extends ClickListener {
 
     public AutoCompleteWordListener() {
         AppStarter app = (AppStarter) Gdx.app.getApplicationListener();
-        this.style = app.getResource("skins/main-skin.json", Skin.class).get("autocomplete-result-label", TextButton.TextButtonStyle.class);
+        this.style = AppStarter.getInstance().getStyle("skins/main-skin.json", "autocomplete-result-label", TextButton.TextButtonStyle.class);
     }
 
     @Override

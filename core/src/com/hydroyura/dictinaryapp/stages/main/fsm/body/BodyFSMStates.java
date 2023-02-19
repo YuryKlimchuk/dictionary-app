@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
+import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterWordAddFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.listners.TranslateButtonListener;
@@ -68,18 +70,12 @@ public enum BodyFSMStates implements State<Group> {
 
             Table table = entity.findActor(BODY_TRANSLATION_VARIANTS_TABLE_ID);
 
-            TextButton.TextButtonStyle style = ((AppStarter) Gdx.app.getApplicationListener())
-                    .getResource("skins/main-skin.json", Skin.class)
-                    .get("btn-translation", TextButton.TextButtonStyle.class);
-
-            TextButton.TextButtonStyle styleSelected = ((AppStarter) Gdx.app.getApplicationListener())
-                    .getResource("skins/main-skin.json", Skin.class)
-                    .get("btn-translation-selected", TextButton.TextButtonStyle.class);
+            TextButton.TextButtonStyle style = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation", TextButton.TextButtonStyle.class);
+            TextButton.TextButtonStyle styleSelected = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation-selected", TextButton.TextButtonStyle.class);
+            TextButton.TextButtonStyle addCustomTranslationStyle = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-add-custom-translation", TextButton.TextButtonStyle.class);
 
             if(isReadyTranslate) {
                 Gdx.app.log(this.getClass().toString(), "translate is ready");
-
-
 
                 translations.add("Прилагательное");
                 translations.add("Прила");
@@ -91,10 +87,9 @@ public enum BodyFSMStates implements State<Group> {
                 translations.add("Дька");
                 translations.add("Дрысьdfsdfsfffка");
 
-
                 table.setVisible(true);
 
-                populateTranslateTable(table, translations, style, styleSelected);
+                populateTranslateTable(table, translations, style, styleSelected, addCustomTranslationStyle);
                 clear();
             }
 
@@ -132,11 +127,10 @@ public enum BodyFSMStates implements State<Group> {
         }
 
         // FIXME: need to refactor
-        private void populateTranslateTable(Table table, List<String> list, TextButton.TextButtonStyle style, TextButton.TextButtonStyle selectedStyle) {
+        private void populateTranslateTable(Table table, List<String> list, TextButton.TextButtonStyle style, TextButton.TextButtonStyle selectedStyle, TextButton.TextButtonStyle addCustomTranslationStyle) {
             float MAX_WIDTH = 0.9f * Gdx.graphics.getWidth();
 
             ClickListener listener = new TranslateButtonListener(style, selectedStyle);
-
             for(int i = 0; i < list.size(); i++) {
                 Table tmpTable = new Table();
                 TextButton b1 = new TextButton(list.get(i), style);
@@ -164,6 +158,17 @@ public enum BodyFSMStates implements State<Group> {
                 }
                 table.add(tmpTable).align(Align.left).row();
             }
+
+            TextButton customTranslateButton = new TextButton("Свой варинат перевода", addCustomTranslationStyle);
+            customTranslateButton.getLabel().setWrap(true);
+            customTranslateButton.setName(BODY_BUTTON_ADD_CUSTOM_TRANSLATION_ID);
+            table.add(customTranslateButton)
+                    .width(Gdx.graphics.getWidth() / 2)
+                    .height(Gdx.graphics.getHeight() / 10)
+                    .align(Align.center)
+                    .padTop(Gdx.graphics.getHeight() / 20);
+
+
         }
 
 
@@ -206,13 +211,15 @@ public enum BodyFSMStates implements State<Group> {
             body2.put("tls", Arrays.asList("ru"));
             body2.put("sl", "en");
 
+            ObjectMapper objectMapper = AppStarter.getInstance().getBean(ObjectMapper.class);
+
             try {
-                ((AppStarter) Gdx.app.getApplicationListener()).getMapper().writeValueAsString(body2);
-                ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient().post(
+                objectMapper.writeValueAsString(body2);
+                AppStarter.getInstance().getBean(HttpClient.class).post(
                         url2,
                         headers2,
-                        ((AppStarter) Gdx.app.getApplicationListener()).getMapper().writeValueAsString(body2),
-                        ((AppStarter) Gdx.app.getApplicationListener()).getTranslateHttpResponse());
+                        objectMapper.writeValueAsString(body2),
+                        AppStarter.getInstance().getBean(TranslateHttpResponse.class));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

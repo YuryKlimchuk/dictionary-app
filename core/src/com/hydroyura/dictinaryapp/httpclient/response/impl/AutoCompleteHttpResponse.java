@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.AutoCompleteConverter;
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOAutoCompleteResponse;
@@ -30,7 +31,7 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
     public AutoCompleteHttpResponse() {
         super();
         this.converter = new AutoCompleteConverter();
-        this.clickListener = new AutoCompleteWordListener();
+        //this.clickListener = new AutoCompleteWordListener();
     }
 
     @Override
@@ -40,6 +41,9 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
         Gdx.app.log(getClass().toString(), "handleHttpResponse, response = " + convertedResponse.toString());
 
         if(table == null) table = findTable();
+
+        if(clickListener == null) clickListener = new AutoCompleteWordListener();
+
         if(style == null) style = findStyle();
 
         table.clearChildren();
@@ -60,6 +64,6 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
     }
 
     private TextButtonStyle findStyle() {
-        return app.getResource("skins/main-skin.json", Skin.class).get("autocomplete-result-label", TextButtonStyle.class);
+        return AppStarter.getInstance().getStyle("skins/main-skin.json", "autocomplete-result-label", TextButtonStyle.class);
     }
 }

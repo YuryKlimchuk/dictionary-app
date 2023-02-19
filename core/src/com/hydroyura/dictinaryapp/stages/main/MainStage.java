@@ -94,7 +94,7 @@ public class MainStage extends Stage {
                 Table translateVariantsTable = new Table();
                 translateVariantsTable.setName(BODY_TRANSLATION_VARIANTS_TABLE_ID);
                 translateVariantsTable.setWidth(Gdx.graphics.getWidth() * 0.9f);
-                translateVariantsTable.setPosition(Gdx.graphics.getWidth() * 0.05f, Gdx.graphics.getHeight() * 0.75f);
+                translateVariantsTable.setPosition(Gdx.graphics.getWidth() * 0.05f, Gdx.graphics.getHeight() * 0.7f);
                 translateVariantsTable.align(Align.topLeft);
                 translateVariantsTable.setVisible(false);
                 group.addActor(translateVariantsTable);
@@ -189,6 +189,22 @@ public class MainStage extends Stage {
                 group.addActor(new Background(skin.getColor("orange")));
                 addActor(group);
 
+
+                TextButton.TextButtonStyle st1 = skin.get("btn-select-collection", TextButton.TextButtonStyle.class);
+                TextButton.TextButtonStyle st2 = skin.get("btn-save-translation", TextButton.TextButtonStyle.class);
+
+                TextButton b1 = new TextButton("Выбрать коллекцию", st1);
+                b1.setSize(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 10);
+                b1.setPosition(Gdx.graphics.getWidth() / 16, Gdx.graphics.getHeight() / 20);
+                b1.getLabel().setWrap(true);
+                group.addActor(b1);
+
+                TextButton b2 = new TextButton("Добавить в колекцию", st2);
+                b2.setSize(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
+                b2.setPosition(11 * Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() / 20);
+                b2.getLabel().setWrap(true);
+                group.addActor(b2);
+
                 return group;
             });
         }
@@ -203,7 +219,7 @@ public class MainStage extends Stage {
 
     public MainStage() {
         app = (AppStarter) Gdx.app.getApplicationListener();
-        Skin skin = app.getResource("skins/main-skin.json", Skin.class);
+        Skin skin = AppStarter.getInstance().getSkin("skins/main-skin.json");
 
         fsmInitialStates.put(FOOTER_MAIN_ID, FooterMainFSMStates.DICTIONARY);
         fsmInitialStates.put(HEADER_FIND_WORD_ID, HeaderFindWordFSMStates.DISPLAY);

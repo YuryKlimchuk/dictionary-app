@@ -1,33 +1,40 @@
 
 main-skin.png
-size: 4096, 512
+size: 8192, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 autocomplete-result-label
   rotate: false
-  xy: 4044, 364
+  xy: 4306, 198
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 autocomplete-result-label-pressed
   rotate: false
-  xy: 4044, 312
+  xy: 7243, 456
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
-btn-add-translation
+btn-add-custom-translation
   rotate: false
-  xy: 2726, 198
-  size: 788, 308
-  orig: 788, 308
+  xy: 4306, 250
+  size: 796, 256
+  orig: 796, 256
+  offset: 0, 0
+  index: -1
+btn-add-custom-translation-pressed
+  rotate: false
+  xy: 5104, 250
+  size: 796, 256
+  orig: 796, 256
   offset: 0, 0
   index: -1
 btn-clear-word
   rotate: false
-  xy: 3966, 338
+  xy: 1924, 164
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
@@ -41,91 +48,112 @@ btn-clear-word-pressed
   index: -1
 btn-dictionary
   rotate: false
-  xy: 1215, 68
+  xy: 706, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-dictionary-active
   rotate: false
-  xy: 1041, 68
+  xy: 532, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-dictionary-pressed
   rotate: false
-  xy: 1389, 68
+  xy: 880, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words
   rotate: false
-  xy: 2085, 68
+  xy: 1576, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words-active
   rotate: false
-  xy: 1737, 68
+  xy: 1228, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-my-words-pressed
   rotate: false
-  xy: 2259, 68
+  xy: 1750, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-pronunciation
   rotate: false
-  xy: 3966, 416
+  xy: 7137, 416
   size: 104, 90
   orig: 104, 90
   offset: 0, 0
   index: -1
 btn-pronunciation-pressed
   rotate: false
-  xy: 2433, 150
+  xy: 6976, 303
   size: 104, 90
   orig: 104, 90
   offset: 0, 0
   index: -1
+btn-save-translation
+  rotate: false
+  xy: 2726, 198
+  size: 788, 308
+  orig: 788, 308
+  offset: 0, 0
+  index: -1
+btn-save-translation-pressed
+  rotate: false
+  xy: 3516, 198
+  size: 788, 308
+  orig: 788, 308
+  offset: 0, 0
+  index: -1
 btn-select-collection
   rotate: false
-  xy: 3516, 218
+  xy: 6352, 218
+  size: 448, 288
+  orig: 448, 288
+  offset: 0, 0
+  index: -1
+btn-select-collection-pressed
+  rotate: false
+  xy: 5902, 218
   size: 448, 288
   orig: 448, 288
   offset: 0, 0
   index: -1
 btn-train
   rotate: false
-  xy: 1911, 68
+  xy: 1402, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-train-active
   rotate: false
-  xy: 867, 68
+  xy: 6802, 221
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-train-pressed
   rotate: false
-  xy: 1563, 68
+  xy: 1054, 68
   size: 172, 172
   orig: 172, 172
   offset: 0, 0
   index: -1
 btn-translation
   rotate: false
-  xy: 532, 129
+  xy: 6802, 395
   size: 333, 111
   orig: 333, 111
   offset: 0, 0

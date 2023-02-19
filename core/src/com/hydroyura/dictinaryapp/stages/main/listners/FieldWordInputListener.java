@@ -22,8 +22,8 @@ public class FieldWordInputListener implements TextFieldListener {
     private Net.HttpResponseListener listener;
 
     public FieldWordInputListener() {
-        httpClient = ((AppStarter) Gdx.app.getApplicationListener()).getHttpClient();
-        mapper = new ObjectMapper();
+        httpClient = AppStarter.getInstance().getBean(HttpClient.class);
+        mapper = AppStarter.getInstance().getBean(ObjectMapper.class);
         listener = new AutoCompleteHttpResponse();
     }
 

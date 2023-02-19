@@ -67,7 +67,26 @@
     "btn-translation-selected": {
       "up": "btn-translation-selected",
       "font": "main-btns-font"
+    },
+    "btn-select-collection": {
+      "up": "btn-select-collection",
+      "down": "btn-select-collection-pressed",
+      "font": "bold-dark-blue-1_0",
+      "fontColor": "dark-blue"
+    },
+    "btn-save-translation": {
+      "up": "btn-save-translation",
+      "down": "btn-save-translation-pressed",
+      "font": "bold-dark-blue-1_0",
+      "fontColor": "dark-blue"
+    },
+    "btn-add-custom-translation": {
+      "up": "btn-add-custom-translation",
+      "down": "btn-add-custom-translation-pressed",
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue"
     }
+
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
@@ -104,15 +123,7 @@
       "btn-my-words-active": {
         "up": "btn-my-words-active",
         "font": "bold-dark-blue-1_0",
-        "fontColor": "dark-blue"
-      },
-      "btn-select-collection": {
-        "up": "btn-select-collection",
-        "font": "main-btns-font"
-      },
-      "btn-add-translation": {
-        "up": "btn-add-translation",
-        "font": "main-btns-font"
+        "fontColor": "dark-blue",
       }
   },
 
