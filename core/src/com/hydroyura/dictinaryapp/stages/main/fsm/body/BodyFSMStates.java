@@ -17,6 +17,7 @@ import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterWordAddFSMStates;
+import com.hydroyura.dictinaryapp.stages.main.listners.AddCustomTranslateButtonListener;
 import com.hydroyura.dictinaryapp.stages.main.listners.TranslateButtonListener;
 
 import java.util.*;
@@ -59,9 +60,15 @@ public enum BodyFSMStates implements State<Group> {
             this.translations = translations;
         }
 
+        @Override
+        public void addTranslate(String translate) {
+            translations.add(translate);
+            isReadyTranslate = true;
+        }
+
         private void clear() {
             this.isReadyTranslate = false;
-            this.translations = null;
+            //this.translations = null;
         }
 
         @Override
@@ -77,6 +84,8 @@ public enum BodyFSMStates implements State<Group> {
             if(isReadyTranslate) {
                 Gdx.app.log(this.getClass().toString(), "translate is ready");
 
+                table.clear();
+                /*
                 translations.add("Прилагательное");
                 translations.add("Прила");
                 translations.add("Дрыська");
@@ -86,6 +95,8 @@ public enum BodyFSMStates implements State<Group> {
                 translations.add("Дрысddька");
                 translations.add("Дька");
                 translations.add("Дрысьdfsdfsfffка");
+
+                 */
 
                 table.setVisible(true);
 
@@ -159,9 +170,12 @@ public enum BodyFSMStates implements State<Group> {
                 table.add(tmpTable).align(Align.left).row();
             }
 
+            ClickListener listener2 = new AddCustomTranslateButtonListener();
+
             TextButton customTranslateButton = new TextButton("Свой варинат перевода", addCustomTranslationStyle);
             customTranslateButton.getLabel().setWrap(true);
             customTranslateButton.setName(BODY_BUTTON_ADD_CUSTOM_TRANSLATION_ID);
+            customTranslateButton.addListener(listener2);
             table.add(customTranslateButton)
                     .width(Gdx.graphics.getWidth() / 2)
                     .height(Gdx.graphics.getHeight() / 10)
@@ -246,6 +260,10 @@ public enum BodyFSMStates implements State<Group> {
     public boolean onMessage(Group entity, Telegram telegram) {
         Gdx.app.log(this.getClass().toString(), "onMessage to state: " + this.toString());
         return false;
+    }
+
+    public void addTranslate(String translate) {
+        throw new RuntimeException("Method is blocked");
     }
 
     public void setTranslations(List<String> translations) {

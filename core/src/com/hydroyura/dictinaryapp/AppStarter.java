@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hydroyura.dictinaryapp.data.SQLiteRepository;
 import com.hydroyura.dictinaryapp.data.repository.IRepository;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
 import com.hydroyura.dictinaryapp.httpclient.response.impl.TranslateHttpResponse;
@@ -20,6 +21,7 @@ import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 import com.hydroyura.dictinaryapp.screens.splash.SplashScreen;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,14 +75,23 @@ public class AppStarter extends Game {
 	}
 
 	public AppStarter(IRepository repository) {
-		this.repository = repository;
+		//this.repository = repository;
 		this.app = this;
+
+		this.repository = new SQLiteRepository();
+
 	}
 
 	@Override
 	public void create() {
 		loadResources();
 		setScreen(new SplashScreen());
+		app.initialContext();
+		try {
+			repository.init();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
 	}
 

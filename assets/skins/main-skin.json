@@ -85,8 +85,19 @@
       "down": "btn-add-custom-translation-pressed",
       "font": "bold-dark-blue-1_5",
       "fontColor": "dark-blue"
+    },
+    "add-translate-dialog-btn-add": {
+      "up": "add-translate-dialog-btn-add",
+      "down": "add-translate-dialog-btn-add-pressed",
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue"
+    },
+    "add-translate-dialog-btn-cancel": {
+      "up": "add-translate-dialog-btn-cancel",
+      "down": "add-translate-dialog-btn-cancel-pressed",
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue"
     }
-
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
@@ -133,6 +144,11 @@
       "fontColor": "dark-blue",
       "background": "field-word-input",
       "focusedBackground": "field-word-input-active"
+    },
+    "add-translate-dialog-text-input": {
+      "font": "bold-dark-blue-1_5",
+      "fontColor": "dark-blue",
+      "background": "add-translate-dialog-text-input"
     }
   },
 
@@ -144,6 +160,14 @@
     "pronunciation": {
       "up": "btn-pronunciation",
       "down": "btn-pronunciation-pressed"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "add-translate-dialog": {
+      background: "add-translate-dialog-background",
+      stageBackground: "add-translate-dialog-stage-background",
+      titleFont: "bold-dark-blue-2_0"
     }
   }
 
