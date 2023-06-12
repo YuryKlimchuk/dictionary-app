@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.GameContext;
 
 
 public enum FooterMainFSMStates implements State<Group> {
@@ -94,7 +95,7 @@ public enum FooterMainFSMStates implements State<Group> {
     }
 
     public void setStyle(String styleName, Button btn) {
-        Skin skin = AppStarter.getInstance().getSkin("skins/main-skin.json");
+        Skin skin = ((GameContext) Gdx.app.getApplicationListener()).getAssetManager().get("skins/main-skin.json", Skin.class);
         ImageTextButtonStyle style = skin.get(styleName, ImageTextButtonStyle.class);
         btn.setStyle(style);
     }

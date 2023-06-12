@@ -3,26 +3,24 @@ package com.hydroyura.dictinaryapp.screens.splash;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.hydroyura.dictinaryapp.AppStarter;
-import com.hydroyura.dictinaryapp.screens.TestScreen2;
+import com.hydroyura.dictinaryapp.GameContext;
+import com.hydroyura.dictinaryapp.screens.main.MainScreen;
 
 public class SplashScreen implements Screen {
 
-    private AppStarter app;
+    private GameContext app;
 
     @Override
     public void show() {
         Gdx.app.log(this.getClass().toString(), "show()");
-        app = (AppStarter) Gdx.app.getApplicationListener();
+        app = (GameContext) Gdx.app.getApplicationListener();
     }
 
     @Override
     public void render(float delta) {
-
-        if(app.getAssetManagerUpdate()) {
+        if(app.getAssetManagerUpdate() && app.getContext().isContextReady()) {
             Gdx.app.log(this.getClass().toString(), "resources loading was finished");
-            app.setMainScreen();
-            //app.setScreen(new TestScreen2());
+            app.setScreen(app.getContext().getBean("MainScreen", MainScreen.class));
         }
 
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);

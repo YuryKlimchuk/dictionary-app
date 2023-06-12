@@ -15,6 +15,7 @@ import com.hydroyura.dictinaryapp.httpclient.response.AbstractHttpResponse;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.impl.AutoCompleteConverter;
 import com.hydroyura.dictinaryapp.httpclient.response.dto.DTOAutoCompleteResponse;
 import com.hydroyura.dictinaryapp.stages.customs.Line;
+import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.listners.AutoCompleteWordListener;
 
@@ -60,7 +61,7 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
     }
 
     private Table findTable() {
-        return (Table) app.getMainStage().findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
+        return (Table) app.getContext().getBean("MainStage", MainStage.class).findActor(BODY_ID, BODY_WORDS_AUTOCOMPLETE_RESULT_ID);
     }
 
     private TextButtonStyle findStyle() {

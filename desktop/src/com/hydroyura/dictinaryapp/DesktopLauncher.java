@@ -26,6 +26,9 @@ public class DesktopLauncher {
 				FileDesktopRepository.FILE_NAMES.TYPES.toString(), ""
 		);
 
-		new Lwjgl3Application(new AppStarter(new FileDesktopRepository("", files)), config);
+		Package packageName = DesktopLauncher.class.getClass().getPackage();
+
+		// new Lwjgl3Application(new AppStarter(new FileDesktopRepository("", files)), config);
+		new Lwjgl3Application(new GameContext(), config);
 	}
 }

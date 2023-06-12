@@ -5,16 +5,17 @@ import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.Net.HttpResponseListener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.GameContext;
 import com.hydroyura.dictinaryapp.httpclient.response.converter.ResponseConverter;
 
 public abstract class AbstractHttpResponse<DTO> implements HttpResponseListener {
 
     protected ResponseConverter<DTO> converter;
 
-    protected AppStarter app;
+    protected GameContext app;
 
     public AbstractHttpResponse() {
-        this.app = (AppStarter) Gdx.app.getApplicationListener();
+        this.app = (GameContext) Gdx.app.getApplicationListener();
     }
 
     @Override

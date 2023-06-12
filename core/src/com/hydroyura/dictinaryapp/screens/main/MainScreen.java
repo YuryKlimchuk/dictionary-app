@@ -4,20 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.hydroyura.dictinaryapp.context.Inject;
 import com.hydroyura.dictinaryapp.stages.main.MainStage;
 
 public class MainScreen implements Screen {
 
-    public Stage getStage() {
-        return stage;
-    }
-
+    @Inject(key = "MainStage")
     private Stage stage;
 
     @Override
     public void show() {
-        stage = new MainStage();
-        //stage.setDebugAll(true);
+        ((MainStage) stage).init();
         Gdx.input.setInputProcessor(stage);
     }
 

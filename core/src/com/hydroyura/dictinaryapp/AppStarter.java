@@ -185,10 +185,11 @@ public class AppStarter extends Game {
 		setScreen(mainScreen);
 	}
 
+	/*
 
 	public MainStage getMainStage() {
 		return ((MainStage) ((MainScreen) mainScreen).getStage());
 	}
-
+	*/
 
 }

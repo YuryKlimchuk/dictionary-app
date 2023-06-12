@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.hydroyura.dictinaryapp.AppStarter;
+import com.hydroyura.dictinaryapp.GameContext;
 import com.hydroyura.dictinaryapp.stages.customs.Background;
 import com.hydroyura.dictinaryapp.stages.customs.Line;
 import com.hydroyura.dictinaryapp.stages.main.fsm.body.BodyFSMStates;
@@ -31,9 +32,7 @@ import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
 
 public class MainStage extends Stage {
 
-
-
-    private AppStarter app;
+    private GameContext app;
 
     private ObjectMap<String, Group> groups = new ObjectMap<>();
 
@@ -46,14 +45,13 @@ public class MainStage extends Stage {
     }
 
 
-
     @FunctionalInterface
     private interface GroupGenerator {
         Group generate(Skin skin);
     }
 
-    class GroupsData {
 
+    class GroupsData {
          Map<String, GroupGenerator> data = new LinkedHashMap<>();
 
         {
@@ -218,8 +216,11 @@ public class MainStage extends Stage {
 
 
     public MainStage() {
-        app = (AppStarter) Gdx.app.getApplicationListener();
-        Skin skin = AppStarter.getInstance().getSkin("skins/main-skin.json");
+    }
+
+    public void init() {
+        app = (GameContext) Gdx.app.getApplicationListener();
+        Skin skin = app.getAssetManager().get("skins/main-skin.json", Skin.class);
 
         fsmInitialStates.put(FOOTER_MAIN_ID, FooterMainFSMStates.DICTIONARY);
         fsmInitialStates.put(HEADER_FIND_WORD_ID, HeaderFindWordFSMStates.DISPLAY);
@@ -242,8 +243,9 @@ public class MainStage extends Stage {
                     fsms.put(entry.key, fsm);
                 }
         );
-
     }
+
+
 
     // FIXME add generic return type <? extends Actor>
     public <T extends Actor> T findActor(String groupId, String actorId) {
