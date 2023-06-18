@@ -1,4 +1,5 @@
 package com.hydroyura.dictinaryapp.httpclient.response.impl;
+/*
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
@@ -60,3 +61,4 @@ public class TranslateHttpResponse extends AbstractHttpResponse<DTOTranslateResp
         isTranslateReady = translateReady;
     }
 }
+*/

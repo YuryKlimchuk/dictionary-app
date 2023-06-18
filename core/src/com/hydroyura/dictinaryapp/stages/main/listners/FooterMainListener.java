@@ -21,22 +21,30 @@ public class FooterMainListener extends ClickListener {
     @Override
     public void clicked(InputEvent event, float x, float y) {
         super.clicked(event, x, y);
-        Gdx.app.log(this.getClass().toString(), "clicked(), button = " + event.getListenerActor().getName());
-
         String btnId = event.getListenerActor().getName();
         String groupId = event.getListenerActor().getParent().getName();
+
+        Gdx.app.log(this.getClass().toString(), "clicked button[" + btnId + "], from group[" + groupId + "]");
 
         DefaultStateMachine<Group, State<Group>> fsm = stage.getFsm(groupId);
         fsm.changeState(getState(btnId));
     }
 
-
-    // FIXME: create map
     private State<Group> getState(String id) {
-        if(id.equals("MAIN_BTN_DICTIONARY")) return FooterMainFSMStates.DICTIONARY;
-        if(id.equals("MAIN_BTN_MY_WORDS")) return FooterMainFSMStates.MY_WORDS;
-        if(id.equals("MAIN_BTN_TRAIN")) return FooterMainFSMStates.TRAIN;
-
-        throw new RuntimeException("Not fount required state");
+        State<Group> state;
+        switch (id) {
+            case "MAIN_BTN_DICTIONARY":
+                state = FooterMainFSMStates.DICTIONARY;
+            break;
+            case "MAIN_BTN_MY_WORDS":
+                state = FooterMainFSMStates.MY_WORDS;
+            break;
+            case "MAIN_BTN_TRAIN":
+                state = FooterMainFSMStates.TRAIN;
+            break;
+            default:
+                throw new RuntimeException("Not fount required state");
+        }
+        return state;
     }
 }

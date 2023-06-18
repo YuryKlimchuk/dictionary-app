@@ -2,7 +2,7 @@ package com.hydroyura.dictinaryapp;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.hydroyura.dictinaryapp.data.FileDesktopRepository;
+//import com.hydroyura.dictinaryapp.data.FileDesktopRepository;
 
 import java.util.Map;
 
@@ -19,12 +19,14 @@ public class DesktopLauncher {
 		config.setTitle("dictionary-app");
 		config.setWindowedMode(400, 800);
 
+		/*
 		Map<String, String> files = Map.of(
 				FileDesktopRepository.FILE_NAMES.WORDS.toString(), "words.json",
 				FileDesktopRepository.FILE_NAMES.LANG.toString(), "",
 				FileDesktopRepository.FILE_NAMES.COLLECTION.toString(), "",
 				FileDesktopRepository.FILE_NAMES.TYPES.toString(), ""
 		);
+		*/
 
 		Package packageName = DesktopLauncher.class.getClass().getPackage();
 

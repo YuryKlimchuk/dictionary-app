@@ -1,5 +1,5 @@
 package com.hydroyura.dictinaryapp.stages.main.listners;
-
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -22,12 +22,12 @@ public class FieldWordInputListener implements TextFieldListener {
     private Net.HttpResponseListener listener;
 
     public FieldWordInputListener() {
-        /*
+
         httpClient = AppStarter.getInstance().getBean(HttpClient.class);
         mapper = AppStarter.getInstance().getBean(ObjectMapper.class);
         listener = new AutoCompleteHttpResponse();
 
-         */
+
     }
 
     @Override
@@ -57,3 +57,4 @@ public class FieldWordInputListener implements TextFieldListener {
         }
     }
 }
+*/

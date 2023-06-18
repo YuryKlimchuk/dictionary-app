@@ -1,4 +1,5 @@
 package com.hydroyura.dictinaryapp.data;
+/*
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -67,7 +68,8 @@ public class FileDesktopRepository implements IRepository {
 
         FileInputStream inputStream = new FileInputStream(wordsFile.file());
 
-        /*
+        */
+/*
         InputStreamReader br = new InputStreamReader(inputStream);
 
         BufferedReader bufferedReader = new BufferedReader(br);
@@ -75,7 +77,8 @@ public class FileDesktopRepository implements IRepository {
         char[bufferedReader.read()] chars = bufferedReader.
 
         boolean flag = wordsFile.file().createNewFile();
-        */
+        *//*
+
 
         String st = new String(inputStream.readAllBytes(), Charset.defaultCharset());
 
@@ -86,3 +89,4 @@ public class FileDesktopRepository implements IRepository {
 
     }
 }
+*/

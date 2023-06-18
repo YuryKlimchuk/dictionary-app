@@ -1,4 +1,5 @@
 package com.hydroyura.dictinaryapp.httpclient.response;
+/*
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpResponse;
@@ -35,3 +36,4 @@ public abstract class AbstractHttpResponse<DTO> implements HttpResponseListener 
         Gdx.app.log(getClass().toString(), "cancelled");
     }
 }
+*/

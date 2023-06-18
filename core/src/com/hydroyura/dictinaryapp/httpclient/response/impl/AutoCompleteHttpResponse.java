@@ -1,5 +1,5 @@
 package com.hydroyura.dictinaryapp.httpclient.response.impl;
-
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Color;
@@ -68,3 +68,4 @@ public class AutoCompleteHttpResponse extends AbstractHttpResponse<DTOAutoComple
         return AppStarter.getInstance().getStyle("skins/main-skin.json", "autocomplete-result-label", TextButtonStyle.class);
     }
 }
+*/

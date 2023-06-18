@@ -1,4 +1,5 @@
 package com.hydroyura.dictinaryapp.stages.main;
+/*
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hydroyura.dictinaryapp.AppStarter;
 import com.hydroyura.dictinaryapp.httpclient.HttpClient;
-import com.hydroyura.dictinaryapp.httpclient.response.impl.AutoCompleteHttpResponse;
+//import com.hydroyura.dictinaryapp.httpclient.response.impl.AutoCompleteHttpResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,3 +55,4 @@ public class SearchTextFieldListener implements TextFieldListener {
         }
     }
 }
+*/

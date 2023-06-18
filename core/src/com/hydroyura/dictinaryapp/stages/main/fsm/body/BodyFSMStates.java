@@ -1,5 +1,6 @@
 package com.hydroyura.dictinaryapp.stages.main.fsm.body;
 
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
@@ -19,13 +20,14 @@ import com.hydroyura.dictinaryapp.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.stages.main.fsm.footer.FooterWordAddFSMStates;
 import com.hydroyura.dictinaryapp.stages.main.listners.AddCustomTranslateButtonListener;
 import com.hydroyura.dictinaryapp.stages.main.listners.TranslateButtonListener;
+*/
 
 import java.util.*;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 import static com.hydroyura.dictinaryapp.stages.main.MainStageConstants.*;
-
+/*
 public enum BodyFSMStates implements State<Group> {
 
     PREVIOUS_INPUTS() {
@@ -85,18 +87,7 @@ public enum BodyFSMStates implements State<Group> {
                 Gdx.app.log(this.getClass().toString(), "translate is ready");
 
                 table.clear();
-                /*
-                translations.add("Прилагательное");
-                translations.add("Прила");
-                translations.add("Дрыська");
-                translations.add("Аельное");
-                translations.add("Дрыськаsdsd");
-                translations.add("Дька");
-                translations.add("Дрысddька");
-                translations.add("Дька");
-                translations.add("Дрысьdfsdfsfffка");
 
-                 */
 
                 table.setVisible(true);
 
@@ -270,3 +261,4 @@ public enum BodyFSMStates implements State<Group> {
         throw new RuntimeException("Method is blocked");
     }
 }
+*/

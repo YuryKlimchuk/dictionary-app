@@ -1,5 +1,5 @@
 package com.hydroyura.dictinaryapp.stages.main.listners;
-
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -56,3 +56,4 @@ public class AutoCompleteWordListener extends ClickListener {
     }
 
 }
+*/

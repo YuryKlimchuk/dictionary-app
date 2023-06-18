@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.hydroyura.dictinaryapp.AppStarter;
+
 import com.hydroyura.dictinaryapp.GameContext;
 
 
@@ -75,14 +75,10 @@ public enum FooterMainFSMStates implements State<Group> {
 
 
     @Override
-    public void enter(Group entity) {
-
-    }
+    public void enter(Group entity) {}
 
     @Override
-    public void update(Group entity) {
-
-    }
+    public void update(Group entity) {}
 
     @Override
     public void exit(Group entity) {
