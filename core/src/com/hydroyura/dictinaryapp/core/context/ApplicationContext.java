@@ -50,7 +50,7 @@ public class ApplicationContext implements Disposable {
                     field.setAccessible(true);
                     try {
                         field.set(arg4, arg5.get(injects[0].name()));
-                    } catch (IllegalAccessException e) {
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.hydroyura.dictinaryapp.core.context.ApplicationContext;
@@ -26,8 +27,9 @@ public class ApplicationStarter extends Game {
         context.addBean(AssetManager.class, assetManager, "AssertManager");
 		context.addBean(MainStage.class, new MainStage(), "MainStage");
 		context.addBean(ApplicationContext.class, context, "Context");
+		context.addBean(HttpRequestBuilder.class, new HttpRequestBuilder(), "HttpRequestBuilder");
 
-        setScreen(new SplashScreen(context, this));
+		setScreen(new SplashScreen(context, this));
 
         new Thread(() -> {
             ApplicationContext p = context;
