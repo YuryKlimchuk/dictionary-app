@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -13,7 +14,11 @@ import com.hydroyura.dictinaryapp.core.http.autocomplete.AutocompleteAPI;
 import com.hydroyura.dictinaryapp.core.http.translate.TranslateAPI;
 import com.hydroyura.dictinaryapp.core.stages.customs.Line;
 import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
+import com.hydroyura.dictinaryapp.core.stages.main.listeners.AddCustomTranslateButtonListener;
 import com.hydroyura.dictinaryapp.core.stages.main.listeners.AutoCompletedTextButtonClickListener;
+import com.hydroyura.dictinaryapp.core.stages.main.listeners.TranslateButtonListener;
+
+import java.util.List;
 
 import static com.hydroyura.dictinaryapp.core.stages.StageConstants.*;
 
@@ -98,10 +103,119 @@ public enum BodyFSMStates implements State<Group> {
             super.update(entity);
 
             if (translateAPI.isResultReady()) {
-                int b = 2;
+                Table table = entity.findActor(BODY_TRANSLATION_VARIANTS_TABLE_ID);
+                table.clear();
+                table.setVisible(true);
+
+                // TODO: init styles one time
+                Skin skin = ((ApplicationStarter) Gdx.app.getApplicationListener()).getContext().getBean("AssertManager", AssetManager.class).get("skins/main-skin.json");
+                TextButton.TextButtonStyle style = skin.get("btn-translation", TextButton.TextButtonStyle.class);
+                TextButton.TextButtonStyle styleSelected = skin.get("btn-translation-selected", TextButton.TextButtonStyle.class);
+                TextButton.TextButtonStyle addCustomTranslationStyle = skin.get("btn-add-custom-translation", TextButton.TextButtonStyle.class);
+                // END TODO
+
+                populateTranslateTable(table, translateAPI.getResult(), style, styleSelected, addCustomTranslationStyle);
+
                 translateAPI.clearResult();
             };
         }
+
+        // FIXME: need to refactor
+        private void populateTranslateTable(Table table, List<String> list, TextButton.TextButtonStyle style, TextButton.TextButtonStyle selectedStyle, TextButton.TextButtonStyle addCustomTranslationStyle) {
+            float MAX_WIDTH = 0.9f * Gdx.graphics.getWidth();
+
+            ClickListener listener = new TranslateButtonListener(style, selectedStyle);
+            for(int i = 0; i < list.size(); i++) {
+                Table tmpTable = new Table();
+                TextButton b1 = new TextButton(list.get(i), style);
+                b1.addListener(listener);
+                b1.setName(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID);
+                tmpTable.add(b1)
+                        .width((b1.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
+                        .height(Gdx.graphics.getHeight() / 22)
+                        .padRight(Gdx.graphics.getWidth() / 50).padTop(Gdx.graphics.getWidth() / 50);
+
+                for(int j = i + 1; j < list.size(); j++) {
+                    TextButton b2 = new TextButton(list.get(j), style);
+                    b2.addListener(listener);
+                    b2.setName(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID);
+                    tmpTable.add(b2)
+                            .width((b2.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
+                            .height(Gdx.graphics.getHeight() / 22)
+                            .padRight(Gdx.graphics.getWidth() / 50).padTop(Gdx.graphics.getWidth() / 50);
+                    if(tmpTable.getPrefWidth() > MAX_WIDTH) {
+                        tmpTable.getCells().removeIndex(tmpTable.getCells().size - 1);
+                        tmpTable.removeActor(b2);
+                        i = j - 1;
+                        break;
+                    }
+                }
+                table.add(tmpTable).align(Align.left).row();
+            }
+
+            ClickListener listener2 = new AddCustomTranslateButtonListener();
+
+            TextButton customTranslateButton = new TextButton("Свой варинат перевода", addCustomTranslationStyle);
+            customTranslateButton.getLabel().setWrap(true);
+            customTranslateButton.setName(BODY_BUTTON_ADD_CUSTOM_TRANSLATION_ID);
+            customTranslateButton.addListener(listener2);
+            table.add(customTranslateButton)
+                    .width(Gdx.graphics.getWidth() / 2)
+                    .height(Gdx.graphics.getHeight() / 10)
+                    .align(Align.center)
+                    .padTop(Gdx.graphics.getHeight() / 20);
+        }
+
+        /*
+            Table table = entity.findActor(BODY_TRANSLATION_VARIANTS_TABLE_ID);
+
+            TextButton.TextButtonStyle style = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation", TextButton.TextButtonStyle.class);
+            TextButton.TextButtonStyle styleSelected = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation-selected", TextButton.TextButtonStyle.class);
+            TextButton.TextButtonStyle addCustomTranslationStyle = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-add-custom-translation", TextButton.TextButtonStyle.class);
+
+            if(isReadyTranslate) {
+                Gdx.app.log(this.getClass().toString(), "translate is ready");
+
+                table.clear();
+
+
+                table.setVisible(true);
+
+                populateTranslateTable(table, translations, style, styleSelected, addCustomTranslationStyle);
+                clear();
+            }
+
+            // show/hide footer_add_word
+            // FIXME: Maybe need to replace from update ???
+            boolean isNeedToShowFooterAdd = StreamSupport.stream(table.getChildren().spliterator(), false).anyMatch(
+                    actor -> {
+                        if(actor instanceof Table) {
+                            Spliterator<Actor> spliterator = ((Table) actor).getChildren().spliterator();
+                            return StreamSupport.stream(spliterator, false).anyMatch(
+                                    childActor -> {
+                                        if(childActor instanceof TextButton) {
+                                            TextButton button = (TextButton) childActor;
+                                            if(button.getName().equals(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID) && button.getStyle().equals(styleSelected)) {
+                                                return true;
+                                            }
+                                        }
+                                        return false;
+                                    }
+                            );
+                        }
+                        return false;
+                    }
+            );
+
+            DefaultStateMachine<Group, State<Group>> fsmFooterAddWord =
+                    ((MainStage) entity.getStage()).getFsm(FOOTER_ADD_WORD_ID);
+
+            if(isNeedToShowFooterAdd) {
+                fsmFooterAddWord.changeState(FooterWordAddFSMStates.DISPLAY);
+            } else {
+                fsmFooterAddWord.changeState(FooterWordAddFSMStates.HIDE);
+            }
+         */
 
         @Override
         public void enter(Group entity) {
@@ -130,6 +244,7 @@ public enum BodyFSMStates implements State<Group> {
 
             translateAPI.post(word);
        }
+
     };
 
     @Override

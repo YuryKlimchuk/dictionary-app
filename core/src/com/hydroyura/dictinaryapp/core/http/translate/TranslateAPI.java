@@ -73,4 +73,8 @@ public class TranslateAPI implements ITranslateAPI {
         result.clear();
     }
 
+    public List<String> getResult() {
+        return result;
+    }
+
 }
