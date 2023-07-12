@@ -2,7 +2,6 @@ package com.hydroyura.dictinaryapp.core.http.autocomplete;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpMethods;
-import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,13 +13,14 @@ import com.hydroyura.dictinaryapp.core.http.autocomplete.response.AutoCompleteRe
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Bean(name = "AutocompleteAPI")
 public class AutocompleteAPI implements IAutocompleteAPI {
 
     private static final String URL = "https://typewise-ai.p.rapidapi.com/completion/complete";
 
-    private Map<String, List<String>> buffer = new HashMap<>();
+    private Map<String, Set<String>> buffer = new HashMap<>();
 
     @Inject(name = "ObjectMapper")
     private ObjectMapper objectMapper;
@@ -66,13 +66,14 @@ public class AutocompleteAPI implements IAutocompleteAPI {
         return buffer.containsKey(key);
     }
 
-    public List<String> getValueFromBuffer(String key) {
+    public Set<String> getValueFromBuffer(String key) {
         return buffer.get(key);
     }
 
-    public void putValueToBuffer(String key, List<String> value) {
-        Gdx.app.getApplicationLogger().log(this.getClass().toString(), "try to put value[] with key[] into autocomplete buffer");
-        Gdx.app.getApplicationLogger().log(this.getClass().toString(), "current buffer size[]");
+    // TODO: add auto-cleaning buffer
+    public void putValueToBuffer(String key, Set<String> value) {
+        Gdx.app.getApplicationLogger().log(this.getClass().toString(), "try to put value[] with key[" + key + "] into autocomplete buffer");
+        Gdx.app.getApplicationLogger().log(this.getClass().toString(), "current buffer size[" + buffer.size() + "]");
         buffer.put(key, value);
     }
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Bean(name = "AutoCompleteResponseListener")
@@ -34,14 +35,11 @@ public class AutoCompleteResponseListener implements HttpResponseListener {
             Map<String, Object> map = objectMapper.readValue(jsonResponse, new TypeReference<Map<String, Object>>() {});
             String key = String.valueOf(map.get("text"));
 
-            List<String> value = ((List<Object>) map.get("predictions"))
+            Set<String> value = ((List<Object>) map.get("predictions"))
                                     .stream()
-                                        .map(item -> {
-                                            Map<String, String> values = ((Map<String, String>) item);
-                                            return values.get("text");
-                                        })
+                                        .map(item -> ((Map<String, String>) item).get("text"))
                                         .sorted(Comparator.naturalOrder())
-                                    .collect(Collectors.toList());
+                                    .collect(Collectors.toSet());
 
             autocompleteAPI.putValueToBuffer(key, value);
         } catch (IOException e) {
