@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.hydroyura.dictinaryapp.core.ApplicationStarter;
 import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.core.stages.main.fsms.footer.FooterAddWordFSMStates;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.header.HeaderFindWordFSMStates;
 
@@ -46,6 +47,7 @@ public class AutoCompletedTextButtonClickListener extends ClickListener {
         stage.getFsm(HEADER_FIND_WORD_ID).changeState(HeaderFindWordFSMStates.HIDE);
         stage.getFsm(BODY_ID).changeState(BodyFSMStates.SELECT_TRANSLATE);
         stage.getFsm(FOOTER_MAIN_ID).changeState(FooterMainFSMStates.HIDE);
+        stage.getFsm(FOOTER_ADD_WORD_ID).changeState(FooterAddWordFSMStates.DISPLAY);
     }
 
 }

@@ -13,9 +13,11 @@ import com.hydroyura.dictinaryapp.core.context.annotations.Bean;
 import com.hydroyura.dictinaryapp.core.context.annotations.Inject;
 import com.hydroyura.dictinaryapp.core.stages.generators.IGroupGenerator;
 import com.hydroyura.dictinaryapp.core.stages.generators.impl.BodyGenerator;
+import com.hydroyura.dictinaryapp.core.stages.generators.impl.FooterAddWordGenerator;
 import com.hydroyura.dictinaryapp.core.stages.generators.impl.FooterMainGenerator;
 import com.hydroyura.dictinaryapp.core.stages.generators.impl.HeaderFindWordGenerator;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.body.BodyFSMStates;
+import com.hydroyura.dictinaryapp.core.stages.main.fsms.footer.FooterAddWordFSMStates;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.footer.FooterMainFSMStates;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.header.HeaderFindWordFSMStates;
 import com.hydroyura.dictinaryapp.core.stages.main.listeners.FooterMainListener;
@@ -44,6 +46,7 @@ public class MainStage extends Stage {
         groupGenerators.put(BODY_ID, new BodyGenerator());
         groupGenerators.put(FOOTER_MAIN_ID, new FooterMainGenerator(new FooterMainListener(this)));
         groupGenerators.put(HEADER_FIND_WORD_ID, new HeaderFindWordGenerator());
+        groupGenerators.put(FOOTER_ADD_WORD_ID, new FooterAddWordGenerator());
 
         generateGroups(groupGenerators);
 
@@ -74,6 +77,7 @@ public class MainStage extends Stage {
 
         map.put(BODY_ID, BodyFSMStates.WORD_INPUT);
         map.put(FOOTER_MAIN_ID, FooterMainFSMStates.DICTIONARY);
+        map.put(FOOTER_ADD_WORD_ID, FooterAddWordFSMStates.HIDE);
         map.put(HEADER_FIND_WORD_ID, HeaderFindWordFSMStates.DISPLAY);
 
 

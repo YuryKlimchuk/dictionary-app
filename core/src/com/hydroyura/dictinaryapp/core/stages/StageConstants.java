@@ -4,6 +4,8 @@ public class StageConstants {
 
     public static String FOOTER_MAIN_ID = "FOOTER_MAIN";
 
+    public static String FOOTER_ADD_WORD_ID = "FOOTER_ADD_WORD_ID";
+
     public static String HEADER_FIND_WORD_ID = "HEADER_FIND_WORD";
 
 

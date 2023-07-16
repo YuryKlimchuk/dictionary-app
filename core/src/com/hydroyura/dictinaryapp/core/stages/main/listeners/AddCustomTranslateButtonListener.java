@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.hydroyura.dictinaryapp.core.ApplicationStarter;
+import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.core.stages.main.fsms.body.BodyFSMStates;
 
 import java.util.Optional;
@@ -99,9 +101,12 @@ public class AddCustomTranslateButtonListener extends ClickListener {
 
                 // вот этот текст впихнуть в список дальше
                 Gdx.app.log(this.getClass().toString(), "Text = " + tf1.getText());
-                addCustomTranslate(tf1.getText());
+                // TO DO: Сделать если текст пустой то кнопка не доступна
+                if(tf1.getText() != null) {
+                    addCustomTranslate(tf1.getText(), event);
+                    getDialog(event.getTarget()).orElseThrow(RuntimeException::new).hide();
+                }
 
-                getDialog(event.getTarget()).orElseThrow(RuntimeException::new).hide();
             }
         });
 
@@ -128,6 +133,8 @@ public class AddCustomTranslateButtonListener extends ClickListener {
             @Override
             public void keyTyped(TextField textField, char c) {
                 Gdx.app.log(this.getClass().toString(), "key = " + String.valueOf(c) + "; text = " + textField.getText());
+                String currentEnter = textField.getText();
+                btnAdd.setDisabled(currentEnter.isEmpty());
             }
         });
         dialog.getContentTable().add(textField)
@@ -162,7 +169,28 @@ public class AddCustomTranslateButtonListener extends ClickListener {
 
     }
 
-    public void addCustomTranslate(String translate) {
+    public void addCustomTranslate(String translate, InputEvent event) {
         Gdx.app.log(this.getClass().getName(), "Add custom translate[" + translate + "]");
+
+        Table table = ((MainStage) event.getStage())
+                .getGroup(BODY_ID)
+                .findActor(BODY_TRANSLATION_VARIANTS_TABLE_ID);
+
+        Skin skin = ((ApplicationStarter) Gdx.app.getApplicationListener()).getContext().getBean("AssertManager", AssetManager.class).get("skins/main-skin.json");
+        TextButton.TextButtonStyle style = skin.get("btn-translation", TextButton.TextButtonStyle.class);
+        TextButton.TextButtonStyle styleSelected = skin.get("btn-translation-selected", TextButton.TextButtonStyle.class);
+        TextButton.TextButtonStyle addCustomTranslationStyle = skin.get("btn-add-custom-translation", TextButton.TextButtonStyle.class);
+
+        ClickListener listener = new TranslateButtonListener(style, styleSelected);
+        Table tmpTable = new Table();
+        TextButton b1 = new TextButton(translate, style);
+        b1.addListener(listener);
+        b1.setName(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID);
+        tmpTable.add(b1)
+                .width((b1.getText().length() + 2) * Gdx.graphics.getWidth() / 35)
+                .height(Gdx.graphics.getHeight() / 22)
+                .padRight(Gdx.graphics.getWidth() / 50).padTop(Gdx.graphics.getWidth() / 50);
+        table.add(tmpTable).align(Align.left).row();
+        table.setDebug(true);
     }
 }

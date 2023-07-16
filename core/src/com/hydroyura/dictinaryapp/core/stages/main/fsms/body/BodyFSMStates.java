@@ -166,57 +166,6 @@ public enum BodyFSMStates implements State<Group> {
                     .padTop(Gdx.graphics.getHeight() / 20);
         }
 
-        /*
-            Table table = entity.findActor(BODY_TRANSLATION_VARIANTS_TABLE_ID);
-
-            TextButton.TextButtonStyle style = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation", TextButton.TextButtonStyle.class);
-            TextButton.TextButtonStyle styleSelected = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-translation-selected", TextButton.TextButtonStyle.class);
-            TextButton.TextButtonStyle addCustomTranslationStyle = AppStarter.getInstance().getStyle("skins/main-skin.json", "btn-add-custom-translation", TextButton.TextButtonStyle.class);
-
-            if(isReadyTranslate) {
-                Gdx.app.log(this.getClass().toString(), "translate is ready");
-
-                table.clear();
-
-
-                table.setVisible(true);
-
-                populateTranslateTable(table, translations, style, styleSelected, addCustomTranslationStyle);
-                clear();
-            }
-
-            // show/hide footer_add_word
-            // FIXME: Maybe need to replace from update ???
-            boolean isNeedToShowFooterAdd = StreamSupport.stream(table.getChildren().spliterator(), false).anyMatch(
-                    actor -> {
-                        if(actor instanceof Table) {
-                            Spliterator<Actor> spliterator = ((Table) actor).getChildren().spliterator();
-                            return StreamSupport.stream(spliterator, false).anyMatch(
-                                    childActor -> {
-                                        if(childActor instanceof TextButton) {
-                                            TextButton button = (TextButton) childActor;
-                                            if(button.getName().equals(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID) && button.getStyle().equals(styleSelected)) {
-                                                return true;
-                                            }
-                                        }
-                                        return false;
-                                    }
-                            );
-                        }
-                        return false;
-                    }
-            );
-
-            DefaultStateMachine<Group, State<Group>> fsmFooterAddWord =
-                    ((MainStage) entity.getStage()).getFsm(FOOTER_ADD_WORD_ID);
-
-            if(isNeedToShowFooterAdd) {
-                fsmFooterAddWord.changeState(FooterWordAddFSMStates.DISPLAY);
-            } else {
-                fsmFooterAddWord.changeState(FooterWordAddFSMStates.HIDE);
-            }
-         */
-
         @Override
         public void enter(Group entity) {
             String word = ((TextButton) entity.findActor(BODY_SELECTED_WORD_ID)).getText().toString();
