@@ -1,0 +1,230 @@
+
+main-skin.png
+size: 4096, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+add-translate-dialog-background
+  rotate: false
+  xy: 2154, 124
+  size: 650, 634
+  orig: 650, 634
+  offset: 0, 0
+  index: -1
+add-translate-dialog-btn-add
+  rotate: false
+  xy: 1290, 212
+  size: 496, 256
+  orig: 496, 256
+  offset: 0, 0
+  index: -1
+add-translate-dialog-btn-add-pressed
+  rotate: false
+  xy: 792, 228
+  size: 496, 256
+  orig: 496, 256
+  offset: 0, 0
+  index: -1
+add-translate-dialog-btn-cancel
+  rotate: false
+  xy: 2806, 502
+  size: 492, 256
+  orig: 492, 256
+  offset: 0, 0
+  index: -1
+add-translate-dialog-btn-cancel-pressed
+  rotate: false
+  xy: 2806, 244
+  size: 492, 256
+  orig: 492, 256
+  offset: 0, 0
+  index: -1
+add-translate-dialog-stage-background
+  rotate: false
+  xy: 3750, 478
+  size: 280, 280
+  orig: 280, 280
+  offset: 0, 0
+  index: -1
+add-translate-dialog-text-input
+  rotate: false
+  xy: 1364, 780
+  size: 1064, 236
+  orig: 1064, 236
+  offset: 0, 0
+  index: -1
+autocomplete-result-label
+  rotate: false
+  xy: 792, 176
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+autocomplete-result-label-pressed
+  rotate: false
+  xy: 4026, 966
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+btn-add-custom-translation
+  rotate: false
+  xy: 2430, 760
+  size: 796, 256
+  orig: 796, 256
+  offset: 0, 0
+  index: -1
+btn-add-custom-translation-pressed
+  rotate: false
+  xy: 3228, 760
+  size: 796, 256
+  orig: 796, 256
+  offset: 0, 0
+  index: -1
+btn-clear-word
+  rotate: false
+  xy: 3924, 308
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+btn-clear-word-pressed
+  rotate: false
+  xy: 1054, 150
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+btn-dictionary
+  rotate: false
+  xy: 1788, 183
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-dictionary-active
+  rotate: false
+  xy: 532, 2
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-dictionary-pressed
+  rotate: false
+  xy: 1962, 183
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words
+  rotate: false
+  xy: 706, 2
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words-active
+  rotate: false
+  xy: 2806, 70
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-my-words-pressed
+  rotate: false
+  xy: 880, 54
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-pronunciation
+  rotate: false
+  xy: 3924, 386
+  size: 104, 90
+  orig: 104, 90
+  offset: 0, 0
+  index: -1
+btn-pronunciation-pressed
+  rotate: false
+  xy: 3154, 152
+  size: 104, 90
+  orig: 104, 90
+  offset: 0, 0
+  index: -1
+btn-save-translation
+  rotate: false
+  xy: 2, 176
+  size: 788, 308
+  orig: 788, 308
+  offset: 0, 0
+  index: -1
+btn-save-translation-pressed
+  rotate: false
+  xy: 1364, 470
+  size: 788, 308
+  orig: 788, 308
+  offset: 0, 0
+  index: -1
+btn-select-collection
+  rotate: false
+  xy: 3300, 180
+  size: 448, 288
+  orig: 448, 288
+  offset: 0, 0
+  index: -1
+btn-select-collection-pressed
+  rotate: false
+  xy: 3300, 470
+  size: 448, 288
+  orig: 448, 288
+  offset: 0, 0
+  index: -1
+btn-train
+  rotate: false
+  xy: 2980, 70
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-train-active
+  rotate: false
+  xy: 3750, 304
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-train-pressed
+  rotate: false
+  xy: 3750, 130
+  size: 172, 172
+  orig: 172, 172
+  offset: 0, 0
+  index: -1
+btn-translation
+  rotate: false
+  xy: 1788, 357
+  size: 333, 111
+  orig: 333, 111
+  offset: 0, 0
+  index: -1
+btn-translation-selected
+  rotate: false
+  xy: 2, 14
+  size: 528, 160
+  orig: 528, 160
+  offset: 0, 0
+  index: -1
+field-word-input
+  rotate: false
+  xy: 2, 752
+  size: 1360, 264
+  orig: 1360, 264
+  offset: 0, 0
+  index: -1
+field-word-input-active
+  rotate: false
+  xy: 2, 486
+  size: 1360, 264
+  orig: 1360, 264
+  offset: 0, 0
+  index: -1
