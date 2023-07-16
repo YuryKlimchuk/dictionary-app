@@ -11,6 +11,7 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.hydroyura.dictinaryapp.core.context.ApplicationContext;
+import com.hydroyura.dictinaryapp.core.repository.IRepository;
 import com.hydroyura.dictinaryapp.core.screens.splash.SplashScreen;
 import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
 
@@ -18,6 +19,12 @@ public class ApplicationStarter extends Game {
 
     private ApplicationContext context;
     private AssetManager assetManager;
+
+	private IRepository repository;
+
+	public ApplicationStarter(IRepository repository) {
+		this.repository = repository;
+	}
 
     @Override
     public void create() {
@@ -110,5 +117,9 @@ public class ApplicationStarter extends Game {
 
 	public ApplicationContext getContext() {
 		return context;
+	}
+
+	public IRepository getRepository() {
+		return repository;
 	}
 }
