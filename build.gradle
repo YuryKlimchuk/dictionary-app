@@ -44,7 +44,6 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
-        implementation 'org.xerial:sqlite-jdbc:3.40.0.0'
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
@@ -61,6 +60,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+
         // https://mvnrepository.com/artifact/org.reflections/reflections
         implementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
 

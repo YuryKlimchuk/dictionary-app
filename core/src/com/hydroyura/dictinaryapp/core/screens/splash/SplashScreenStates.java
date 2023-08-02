@@ -5,7 +5,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.assets.AssetManager;
+import com.hydroyura.dictinaryapp.core.model.Word;
+import com.hydroyura.dictinaryapp.core.repository.IRepository;
 import com.hydroyura.dictinaryapp.core.screens.main.MainScreen;
+
+import java.util.Arrays;
 
 public enum SplashScreenStates implements State<Screen> {
 

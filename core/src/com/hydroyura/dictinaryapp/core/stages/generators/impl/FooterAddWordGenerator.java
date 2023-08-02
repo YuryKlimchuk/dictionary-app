@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.hydroyura.dictinaryapp.core.stages.customs.Background;
 import com.hydroyura.dictinaryapp.core.stages.generators.IGroupGenerator;
+import com.hydroyura.dictinaryapp.core.stages.main.listeners.SaveWordToRepositoryTextButtonClickListener;
 
 import static com.hydroyura.dictinaryapp.core.stages.StageConstants.FOOTER_ADD_WORD_ID;
 
@@ -31,6 +32,7 @@ public class FooterAddWordGenerator implements IGroupGenerator {
         group.addActor(b1);
 
         TextButton b2 = new TextButton("Добавить в колекцию", st2);
+        b2.addListener(new SaveWordToRepositoryTextButtonClickListener());
         b2.setSize(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
         b2.setPosition(11 * Gdx.graphics.getWidth() / 24, Gdx.graphics.getHeight() / 20);
         b2.getLabel().setWrap(true);

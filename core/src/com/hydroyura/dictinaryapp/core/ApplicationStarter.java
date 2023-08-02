@@ -41,6 +41,7 @@ public class ApplicationStarter extends Game {
         new Thread(() -> {
             ApplicationContext p = context;
             context.init();
+			repository.initConnection();
         }).start();
 
     }

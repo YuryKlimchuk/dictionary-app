@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Align;
 import com.hydroyura.dictinaryapp.core.ApplicationStarter;
 import com.hydroyura.dictinaryapp.core.http.autocomplete.AutocompleteAPI;
 import com.hydroyura.dictinaryapp.core.http.translate.TranslateAPI;
+import com.hydroyura.dictinaryapp.core.model.Word;
+import com.hydroyura.dictinaryapp.core.repository.IRepository;
 import com.hydroyura.dictinaryapp.core.stages.customs.Line;
 import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
 import com.hydroyura.dictinaryapp.core.stages.main.listeners.AddCustomTranslateButtonListener;
@@ -168,6 +170,24 @@ public enum BodyFSMStates implements State<Group> {
 
         @Override
         public void enter(Group entity) {
+
+            /*
+            // FIXME: REMOVE IT
+            // ONLY FOR TESTS
+            IRepository repository = ((ApplicationStarter) Gdx.app.getApplicationListener()).getRepository();
+            Word word1 = new Word()
+                    .setOriginal("cat")
+                    .setCollectionId("TEST_COL")
+                    .setType("существительное")
+                    .setTranslate(new String[] {"Рыба, рыбка"})
+                    .setTrainStatus(10);
+            repository.addWord(word1);
+
+            */
+
+
+
+
             String word = ((TextButton) entity.findActor(BODY_SELECTED_WORD_ID)).getText().toString();
             Gdx.app.log(this.getClass().toString(), "Word to add [" + word + "]");
 

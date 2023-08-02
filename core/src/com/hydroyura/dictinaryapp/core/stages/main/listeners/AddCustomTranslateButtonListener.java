@@ -183,6 +183,7 @@ public class AddCustomTranslateButtonListener extends ClickListener {
 
         ClickListener listener = new TranslateButtonListener(style, styleSelected);
         Table tmpTable = new Table();
+        tmpTable.setName(BODY_TRANSLATION_VARIANTS_TABLE_BUFFER_ID);
         TextButton b1 = new TextButton(translate, style);
         b1.addListener(listener);
         b1.setName(BODY_TRANSLATION_VARIANTS_TABLE_BUTTON_ID);

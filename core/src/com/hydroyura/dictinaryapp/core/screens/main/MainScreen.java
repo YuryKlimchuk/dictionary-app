@@ -6,8 +6,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hydroyura.dictinaryapp.core.ApplicationStarter;
 import com.hydroyura.dictinaryapp.core.context.annotations.Bean;
 import com.hydroyura.dictinaryapp.core.context.annotations.Inject;
+import com.hydroyura.dictinaryapp.core.model.Word;
+import com.hydroyura.dictinaryapp.core.repository.IRepository;
 import com.hydroyura.dictinaryapp.core.stages.main.MainStage;
 
 @Bean(name = "MainScreen")

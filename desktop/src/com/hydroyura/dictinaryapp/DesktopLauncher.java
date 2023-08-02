@@ -11,6 +11,6 @@ public class DesktopLauncher {
         config.setTitle("dictionary-app");
         config.setWindowedMode(400, 800);
 
-        new Lwjgl3Application(new ApplicationStarter(new DesktopRepository()), config);
+        new Lwjgl3Application(new ApplicationStarter(new DesktopRepositorySQLite()), config);
     }
 }
