@@ -60,7 +60,7 @@ public class DesktopRepositorySQLite implements IRepository {
                         + word.getTrainStatus() + ");";
             statement.executeUpdate(sql);
             statement.close();
-            connection.commit();
+            //connection.commit();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
